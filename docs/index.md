@@ -7,7 +7,7 @@ SYNOPSIS
 --------
 
 ```shell
-dd-poco-convert-av-dataset <in> <out>
+dd-poc-convert-av-dataset <in> <out>
 ```
 
 DESCRIPTION
