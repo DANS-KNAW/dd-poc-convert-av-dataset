@@ -1,0 +1,15 @@
+
+#
+# See https://www.dropwizard.io/en/latest/manual/configuration.html#logging
+#
+logging:
+  level: OFF
+  loggers:
+    "nl.knaw.dans":
+      level: INFO
+  appenders:
+    - type: file
+      archive: false
+      timeZone: system
+      currentLogFilename: ${HOME}/convert-av-dataset.log
+
