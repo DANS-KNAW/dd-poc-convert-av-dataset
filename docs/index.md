@@ -14,7 +14,6 @@ DESCRIPTION
 -----------
 PoC for a tool that will help with the migration of AV datasets from EASY to the Data Stations.
 
-
 INSTALLATION AND CONFIGURATION
 ------------------------------
 Currently, this project is built as an RPM package for RHEL8 compatible OSes and later. The RPM will install the binaries to
