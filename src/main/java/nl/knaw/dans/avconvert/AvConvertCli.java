@@ -41,7 +41,13 @@ public class AvConvertCli extends AbstractCommandLineApp<AvConvertConfig> {
                             description = "The directory containing the AV dataset.")
     private Path inputDir;
 
+
     @CommandLine.Parameters(index = "1",
+                            paramLabel = "MAPPING_CSV",
+                            description = "File with columns 'easy-file-id', 'path-in-AV-dir', 'path-in-springfield-dir'")
+    private Path mapping;
+
+    @CommandLine.Parameters(index = "2",
                             paramLabel = "OUTPUT_DIR",
                             description = "The directory where the converted dataset will be stored.")
     private Path outputDir;
@@ -58,7 +64,7 @@ public class AvConvertCli extends AbstractCommandLineApp<AvConvertConfig> {
 
     @Override
     public Integer call() {
-        new Converter().convert(inputDir, outputDir);
+        new Converter().convert(inputDir, mapping, outputDir);
         return 0;
     }
 }

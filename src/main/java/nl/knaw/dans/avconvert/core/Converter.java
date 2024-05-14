@@ -15,16 +15,19 @@
  */
 package nl.knaw.dans.avconvert.core;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 
 import java.nio.file.Path;
 
 @Slf4j
 public class Converter {
-    
-    public void convert(Path inputDir, Path outputDir) {
+    @SneakyThrows
+    public void convert(Path inputDir, Path mapping, Path outputDir) {
         log.debug("Converting AV dataset from {} to {}", inputDir, outputDir);
-        // TODO: implement
+        FileUtils.copyDirectory(inputDir.toFile(), outputDir.toFile());
+        new AVReplacer(outputDir, mapping).replaceAVFiles();
+        // TODO create 2nd and 3rd revision bags
     }
-    
 }

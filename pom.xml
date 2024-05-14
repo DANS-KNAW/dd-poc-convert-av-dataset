@@ -50,6 +50,16 @@
             <artifactId>commons-beanutils</artifactId>
         </dependency>
         <dependency>
+            <groupId>nl.knaw.dans</groupId>
+            <artifactId>dans-bagit-lib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
         </dependency>
