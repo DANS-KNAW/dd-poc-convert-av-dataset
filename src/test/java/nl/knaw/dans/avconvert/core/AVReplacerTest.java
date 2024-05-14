@@ -6,7 +6,6 @@ import nl.knaw.dans.avconvert.AbstractTestWithTestDir;
 import org.h2.store.fs.FileUtils;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -40,16 +39,16 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             BagIt-Version: 1.0
             Tag-File-Character-Encoding: UTF-8
             """);
-        try (BufferedWriter writer = Files.newBufferedWriter(csvFile)) {
-            writer.write("""
-                easy-file-id,path-in-AV-dir,path-in-springfield-dir
-                file1,%s,
-                file2,,%s
-                skipped,,""".formatted(
-                Paths.get("src/test/resources/avDir/marbles.mp4"),
-                Paths.get("src/test/resources/springfield/swirls.mp4")
-            ));
-        }
+        Files.createFile(bagDir.resolve("tagmanifest-sha1.txt"));
+        Files.createFile(bagDir.resolve("manifest-sha1.txt"));
+        Files.writeString(csvFile, """
+            easy-file-id,path-in-AV-dir,path-in-springfield-dir
+            file1,%s,
+            file2,,%s
+            skipped,,""".formatted(
+            Paths.get("src/test/resources/avDir/marbles.mp4"),
+            Paths.get("src/test/resources/springfield/swirls.mp4")
+        ));
         Files.writeString(filesXml, """
             <files
                     xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd"
@@ -77,12 +76,24 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
 
         assertThat(bagDir.resolve("data/file1.mp4")).hasSize(0L);
         assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
+        assertThat(bagDir.resolve("manifest-sha1.txt")).hasSize(0L);
+        assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasSize(0L);
         var logger = captureLog(Level.INFO, AVReplacer.class.getName());
 
         new AVReplacer(bagDir, csvFile).replaceAVFiles();
 
         assertThat(bagDir.resolve("data/file1.mp4")).hasSize(4918979L);
         assertThat(bagDir.resolve("data/file2.mp4")).hasSize(7452757L);
+        assertThat(bagDir.resolve("manifest-sha1.txt")).hasContent("""
+            4850493ec77de801fe4876d3bf70b9ffb264f73c  data/file2.mp4
+            ab8e3b0d1cb0b5f057703257e87b7903b24d8890  data/file1.mp4
+            """);
+        assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasContent("""
+            8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
+            da39a3ee5e6b4b0d3255bfef95601890afd80709  tagmanifest-sha1.txt
+            3e0eff6102310a45d607a6f34b03c9d77bf98b01  metadata/files.xml
+            72a6e765b10e4d74d5556fe007eb1cbb5905df34  manifest-sha1.txt
+            """);
 
         var messages = logger.list.stream().map(ILoggingEvent::getFormattedMessage).toList();
         assertThat(messages.get(0)).isEqualTo("""
