@@ -31,10 +31,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -98,13 +96,19 @@ public class AVReplacer {
         return createManifestToMessageDigestMap(algorithms);
     }
 
-    private void replaceFile(String key) throws IOException {
-        FileUtils.copyFile(bagDir
-                .resolve("data")
-                .resolve(fileIdToBagLocationMap.get(key))
-                .toFile(),
-            new File(fileIdToExternalLocationMap.get(key))
-        );
+    private void replaceFile(String key) {
+        try {
+            FileUtils.copyFile(
+                new File(fileIdToExternalLocationMap.get(key)),
+                bagDir
+                    .resolve("data")
+                    .resolve(fileIdToBagLocationMap.get(key))
+                    .toFile()
+            );
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static Map<String, String> readCSV(Path filePath) throws IOException {
@@ -120,6 +124,9 @@ public class AVReplacer {
                     var pathInSpringfieldDir = csvRecord.get("path-in-springfield-dir");
                     if (isNotEmpty(pathInSpringfieldDir))
                         records.put(csvRecord.get("easy-file-id"), pathInSpringfieldDir);
+                    else {
+                        logger.warn("No path found for: {}", csvRecord);
+                    }
                 }
             }
         }
