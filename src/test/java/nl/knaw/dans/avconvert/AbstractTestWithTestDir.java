@@ -15,17 +15,10 @@
  */
 package nl.knaw.dans.avconvert;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class AbstractTestWithTestDir {
     protected final Path testDir = Path.of("target/test")
@@ -34,13 +27,5 @@ public class AbstractTestWithTestDir {
     @BeforeEach
     public void setUp() throws Exception {
         FileUtils.deleteDirectory(testDir.toFile());
-    }
-    public static ListAppender<ILoggingEvent> captureLog(Level debug, String loggerName) {
-        var logger = (Logger) LoggerFactory.getLogger(loggerName);
-        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
-        listAppender.start();
-        logger.setLevel(debug);
-        logger.addAppender(listAppender);
-        return listAppender;
     }
 }

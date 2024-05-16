@@ -41,7 +41,6 @@ public class AvConvertCli extends AbstractCommandLineApp<AvConvertConfig> {
                             description = "The directory containing the AV dataset.")
     private Path inputDir;
 
-
     @CommandLine.Parameters(index = "1",
                             paramLabel = "MAPPING_CSV",
                             description = "File with columns 'easy-file-id', 'path-in-AV-dir', 'path-in-springfield-dir'")

@@ -27,6 +27,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static java.nio.file.Files.createDirectories;
+import static nl.knaw.dans.avconvert.TestUtils.captureLog;
+import static nl.knaw.dans.avconvert.TestUtils.captureStdout;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -94,6 +96,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         assertThat(bagDir.resolve("manifest-sha1.txt")).hasSize(0L);
         assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasSize(0L);
         var logger = captureLog(Level.INFO, AVReplacer.class.getName());
+        captureStdout(); // ignore the logging on stdout
 
         new AVReplacer(bagDir, csvFile).replaceAVFiles();
 
