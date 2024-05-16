@@ -61,8 +61,8 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         Files.writeString(csvFile, """
             easy-file-id,path-in-AV-dir,path-in-springfield-dir
             file1,%s,
-            file2,,%s
-            skipped,,""".formatted(
+            file2,,%s,causes logging
+            file9,,causes logging""".formatted(
             Paths.get("src/test/resources/avDir/marbles.mp4"),
             Paths.get("src/test/resources/springfield/swirls.mp4")
         ));
@@ -114,10 +114,9 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             """);
 
         var messages = logger.list.stream().map(ILoggingEvent::getFormattedMessage).toList();
-        assertThat(messages.get(0)).isEqualTo("""
-            No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , src/test/resources/springfield/swirls.mp4]]""");
-        assertThat(messages.get(1)).isEqualTo("""
-            No AV path found for: CSVRecord [comment='null', recordNumber=3, values=[skipped, , ]]""");
+        assertThat(messages.get(0)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , src/test/resources/springfield/swirls.mp4, causes logging]]");
+        assertThat(messages.get(1)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=3, values=[file9, , causes logging]]");
+        assertThat(messages.get(4)).isEqualTo("No external location found for: file2");
         assertThat(messages.get(2)).isEqualTo("""
             No <dct:identifier> found in: <?xml version="1.0" encoding="UTF-8"?><file filepath="file3.mp4" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/">
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
@@ -128,5 +127,6 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
               </file>"""
         );
+        assertThat(messages).hasSize(5);
     }
 }
