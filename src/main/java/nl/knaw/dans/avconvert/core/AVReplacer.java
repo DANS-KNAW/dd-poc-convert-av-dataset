@@ -112,17 +112,23 @@ public class AVReplacer {
     }
 
     private void replaceFile(String key) {
-        try {
-            FileUtils.copyFile(
-                new File(fileIdToExternalLocationMap.get(key)),
-                bagDir
-                    .resolve("data")
-                    .resolve(fileIdToBagLocationMap.get(key))
-                    .toFile()
-            );
+        var externalLocation = fileIdToExternalLocationMap.get(key);
+        if (isEmpty(externalLocation)) {
+            logger.warn("No external location found for: {}", key);
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        else {
+            try {
+                FileUtils.copyFile(
+                    new File(externalLocation),
+                    bagDir
+                        .resolve("data")
+                        .resolve(fileIdToBagLocationMap.get(key))
+                        .toFile()
+                );
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -135,14 +141,8 @@ public class AVReplacer {
                 var pathInAvDir = csvRecord.get("path-in-AV-dir");
                 if (isNotEmpty(pathInAvDir))
                     records.put(csvRecord.get("easy-file-id"), pathInAvDir);
-                else {
-                    var pathInSpringfieldDir = csvRecord.get("path-in-springfield-dir");
-                    if (isNotEmpty(pathInSpringfieldDir))
-                        records.put(csvRecord.get("easy-file-id"), pathInSpringfieldDir);
-                    else {
-                        logger.warn("No path found for: {}", csvRecord);
-                    }
-                }
+                else
+                    logger.warn("No AV path found for: {}", csvRecord);
             }
         }
         return records;

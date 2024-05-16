@@ -101,27 +101,28 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         new AVReplacer(bagDir, csvFile).replaceAVFiles();
 
         assertThat(bagDir.resolve("data/file1.mp4")).hasSize(4918979L);
-        assertThat(bagDir.resolve("data/file2.mp4")).hasSize(7452757L);
+        assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
         assertThat(bagDir.resolve("manifest-sha1.txt")).hasContent("""
-            4850493ec77de801fe4876d3bf70b9ffb264f73c  data/file2.mp4
+            da39a3ee5e6b4b0d3255bfef95601890afd80709  data/file2.mp4
             ab8e3b0d1cb0b5f057703257e87b7903b24d8890  data/file1.mp4
             """);
         assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasContent("""
             8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
             da39a3ee5e6b4b0d3255bfef95601890afd80709  tagmanifest-sha1.txt
             3e0eff6102310a45d607a6f34b03c9d77bf98b01  metadata/files.xml
-            72a6e765b10e4d74d5556fe007eb1cbb5905df34  manifest-sha1.txt
+            0412a92d67d0c42d15fb3a31297f0db477d1fe93  manifest-sha1.txt
             """);
 
         var messages = logger.list.stream().map(ILoggingEvent::getFormattedMessage).toList();
         assertThat(messages.get(0)).isEqualTo("""
-            No path found for: CSVRecord [comment='null', recordNumber=3, values=[skipped, , ]]""");
-
+            No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , src/test/resources/springfield/swirls.mp4]]""");
         assertThat(messages.get(1)).isEqualTo("""
+            No AV path found for: CSVRecord [comment='null', recordNumber=3, values=[skipped, , ]]""");
+        assertThat(messages.get(2)).isEqualTo("""
             No <dct:identifier> found in: <?xml version="1.0" encoding="UTF-8"?><file filepath="file3.mp4" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/">
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
               </file>""");
-        assertThat(messages.get(2)).isEqualTo("""
+        assertThat(messages.get(3)).isEqualTo("""
             No filepath attribute found in: <?xml version="1.0" encoding="UTF-8"?><file xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/">
                 <dct:identifier xmlns:dct="http://purl.org/dc/terms/">file4</dct:identifier>
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
