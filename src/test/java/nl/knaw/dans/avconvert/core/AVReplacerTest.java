@@ -17,6 +17,7 @@ package nl.knaw.dans.avconvert.core;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.util.FileUtil;
 import nl.knaw.dans.avconvert.AbstractTestWithTestDir;
 import org.h2.store.fs.FileUtils;
 import org.junit.jupiter.api.Test;
@@ -26,32 +27,34 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static ch.qos.logback.core.util.FileUtil.createMissingParentDirectories;
 import static java.nio.file.Files.createDirectories;
 import static nl.knaw.dans.avconvert.TestUtils.captureLog;
 import static nl.knaw.dans.avconvert.TestUtils.captureStdout;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.h2.store.fs.FileUtils.createFile;
 
 public class AVReplacerTest extends AbstractTestWithTestDir {
 
-    Path bagDir = testDir.resolve("bag");
-    Path filesXml = bagDir.resolve("metadata/files.xml");
-    Path csvFile = testDir.resolve("mapping.csv");
+    private final Path bagDir = testDir.resolve("bag");
+    private final Path filesXmlPath = bagDir.resolve("metadata/files.xml");
+    private final Path csvFile = testDir.resolve("mapping.csv");
 
     @Test
     public void constructor_should_throw_no_csv() {
-        assertThatThrownBy(() -> new AVReplacer(bagDir, csvFile))
+        assertThatThrownBy(() -> new AVReplacer(bagDir, csvFile, null))
             .isInstanceOf(NoSuchFileException.class)
             .hasMessage(testDir.resolve("mapping.csv").toString());
     }
 
     @Test
     public void should_replace() throws Exception {
-        createDirectories(csvFile.getParent());
-        createDirectories(filesXml.getParent());
+        createMissingParentDirectories(csvFile.toFile());
+        createMissingParentDirectories(filesXmlPath.toFile());
         createDirectories(bagDir.resolve("data"));
-        FileUtils.createFile(bagDir.resolve("data/file1.mp4").toString());
-        FileUtils.createFile(bagDir.resolve("data/file2.mp4").toString());
+        createFile(bagDir.resolve("data/file1.mp4").toString());
+        createFile(bagDir.resolve("data/file2.mp4").toString());
         Files.writeString(bagDir.resolve("bagit.txt"), """
             BagIt-Version: 1.0
             Tag-File-Character-Encoding: UTF-8
@@ -66,7 +69,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             Paths.get("src/test/resources/avDir/marbles.mp4"),
             Paths.get("src/test/resources/springfield/swirls.mp4")
         ));
-        Files.writeString(filesXml, """
+        Files.writeString(filesXmlPath, """
             <files
                     xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,6 +93,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             </files>
             """
         );
+        var filesXml = Converter.readXmlFile(bagDir.resolve("metadata/files.xml"));
 
         assertThat(bagDir.resolve("data/file1.mp4")).hasSize(0L);
         assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
@@ -98,7 +102,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         var logger = captureLog(Level.INFO, AVReplacer.class.getName());
         captureStdout(); // ignore the logging on stdout
 
-        new AVReplacer(bagDir, csvFile).replaceAVFiles();
+        new AVReplacer(bagDir, csvFile, filesXml).replaceAVFiles();
 
         assertThat(bagDir.resolve("data/file1.mp4")).hasSize(4918979L);
         assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);

@@ -17,12 +17,6 @@ package nl.knaw.dans.avconvert.core;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import nl.knaw.dans.bagit.creator.CreatePayloadManifestsVistor;
-import nl.knaw.dans.bagit.creator.CreateTagManifestsVistor;
-import nl.knaw.dans.bagit.domain.Manifest;
-import nl.knaw.dans.bagit.reader.BagReader;
-import nl.knaw.dans.bagit.util.PathUtils;
-import nl.knaw.dans.bagit.writer.ManifestWriter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -48,14 +42,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-import static nl.knaw.dans.bagit.hash.Hasher.createManifestToMessageDigestMap;
-import static nl.knaw.dans.bagit.util.PathUtils.getDataDir;
 import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
@@ -67,48 +56,20 @@ public class AVReplacer {
     private final Map<String, String> fileIdToExternalLocationMap;
     private final Map<String, String> fileIdToBagLocationMap;
 
-    public AVReplacer(Path bagDir, Path csv)
+    public AVReplacer(Path bagDir, Path csv, Document filesXml)
         throws IOException, ParserConfigurationException, SAXException {
 
         this.bagDir = bagDir;
         fileIdToExternalLocationMap = readCSV(csv);
-        fileIdToBagLocationMap = getIdentifierToDestMap(readXmlFile(bagDir.resolve("metadata/files.xml")));
+        fileIdToBagLocationMap = getIdentifierToDestMap(filesXml);
     }
 
     @SneakyThrows
     public void replaceAVFiles() {
         fileIdToBagLocationMap.keySet().forEach(this::replaceFile);
-
-        var bag = new BagReader().read(bagDir);
-        var fileEncoding = bag.getFileEncoding();
-        var rootDir = bag.getRootDir();
-        var bagitDir = PathUtils.getBagitDir(bag);
-
         // TODO Do the datasets have other big files?
-        //  Then override visitFile and reuse values for paths not in fileIdToBagLocationMap.values().
-        var payLoadManifests = bag.getPayLoadManifests();
-        var payloadFilesMap = getManifestToDigestMap(payLoadManifests);
-        var payloadVisitor = new CreatePayloadManifestsVistor(payloadFilesMap, true);
-        Files.walkFileTree(getDataDir(bag), payloadVisitor);
-        replaceManifests(payLoadManifests, payloadFilesMap);
-        ManifestWriter.writePayloadManifests(payLoadManifests, bagitDir, rootDir, fileEncoding);
-
-        var tagManifests = bag.getTagManifests();
-        var tagFilesMap = getManifestToDigestMap(tagManifests);
-        var tagFileVisitor = new CreateTagManifestsVistor(tagFilesMap, true);
-        Files.walkFileTree(rootDir, tagFileVisitor);
-        replaceManifests(tagManifests, tagFilesMap);
-        ManifestWriter.writeTagManifests(tagManifests, bagitDir, rootDir, fileEncoding);
-    }
-
-    private static void replaceManifests(Set<Manifest> payLoadManifests, Map<Manifest, MessageDigest> payloadFilesMap) {
-        payLoadManifests.clear();
-        payLoadManifests.addAll(payloadFilesMap.keySet());
-    }
-
-    private static Map<Manifest, MessageDigest> getManifestToDigestMap(Set<Manifest> manifests) throws NoSuchAlgorithmException {
-        var algorithms = manifests.stream().map(Manifest::getAlgorithm).toList();
-        return createManifestToMessageDigestMap(algorithms);
+        //  Then override modifyPayloads and reuse values for paths not in fileIdToBagLocationMap.values().
+        new ManifestsUpdater(bagDir).update();
     }
 
     private void replaceFile(String key) {
@@ -146,17 +107,6 @@ public class AVReplacer {
             }
         }
         return records;
-    }
-
-    private static Document readXmlFile(Path path) throws ParserConfigurationException, IOException, SAXException {
-        var factory = DocumentBuilderFactory.newInstance();
-        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        factory.setNamespaceAware(true);
-
-        return factory
-            .newDocumentBuilder()
-            .parse(path.toFile());
     }
 
     private static Map<String, String> getIdentifierToDestMap(Document filesXml) {
