@@ -27,11 +27,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -57,7 +53,7 @@ public class AVReplacer {
     private final Map<String, String> fileIdToBagLocationMap;
 
     public AVReplacer(Path bagDir, Path csv, Document filesXml)
-        throws IOException, ParserConfigurationException, SAXException {
+        throws IOException {
 
         this.bagDir = bagDir;
         fileIdToExternalLocationMap = readCSV(csv);
@@ -109,7 +105,7 @@ public class AVReplacer {
         return records;
     }
 
-    private static Map<String, String> getIdentifierToDestMap(Document filesXml) {
+    private Map<String, String> getIdentifierToDestMap(Document filesXml) throws IOException {
         Map<String, String> identifierToDestMap = new HashMap<>();
 
         var fileNodes = filesXml.getElementsByTagName("file");
@@ -125,7 +121,7 @@ public class AVReplacer {
                     if (isEmpty(filePath)) {
                         logger.error("No filepath attribute found in: {}", serializeNode(fileElement));
                     }
-                    else {
+                    else if (0 == Files.size(bagDir.resolve("data").resolve(filePath))) {
                         var identifier = identifierNodes.item(0).getTextContent();
                         identifierToDestMap.put(identifier, filePath);
                     }

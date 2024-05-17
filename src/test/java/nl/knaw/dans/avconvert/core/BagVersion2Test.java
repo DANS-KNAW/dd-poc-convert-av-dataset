@@ -14,6 +14,7 @@ import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectory;
 import static java.nio.file.Files.createFile;
 import static java.nio.file.Files.writeString;
+import static nl.knaw.dans.avconvert.TestUtils.captureStdout;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BagVersion2Test extends AbstractTestWithTestDir {
@@ -76,6 +77,8 @@ public class BagVersion2Test extends AbstractTestWithTestDir {
             0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file4.mp4
             """
         );
+        captureStdout(); // ignore the logging on stdout
+
         new BagVersion2(bagDir).updateManifests(Arrays.asList(
             Path.of("file2.mp4"),
             Path.of("file3.mp4")
