@@ -106,16 +106,6 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
 
         assertThat(bagDir.resolve("data/file1.mp4")).hasSize(4918979L);
         assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
-        assertThat(bagDir.resolve("manifest-sha1.txt")).hasContent("""
-            da39a3ee5e6b4b0d3255bfef95601890afd80709  data/file2.mp4
-            ab8e3b0d1cb0b5f057703257e87b7903b24d8890  data/file1.mp4
-            """);
-        assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasContent("""
-            8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
-            da39a3ee5e6b4b0d3255bfef95601890afd80709  tagmanifest-sha1.txt
-            3e0eff6102310a45d607a6f34b03c9d77bf98b01  metadata/files.xml
-            0412a92d67d0c42d15fb3a31297f0db477d1fe93  manifest-sha1.txt
-            """);
 
         var messages = logger.list.stream().map(ILoggingEvent::getFormattedMessage).toList();
         assertThat(messages.get(0)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , src/test/resources/springfield/swirls.mp4, causes logging]]");
@@ -132,5 +122,18 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
               </file>"""
         );
         assertThat(messages).hasSize(5);
+
+        // TODO: move this part of the test together with the assertions
+        new ManifestsUpdater(bagDir).updateAll();
+        assertThat(bagDir.resolve("manifest-sha1.txt")).hasContent("""
+            da39a3ee5e6b4b0d3255bfef95601890afd80709  data/file2.mp4
+            ab8e3b0d1cb0b5f057703257e87b7903b24d8890  data/file1.mp4
+            """);
+        assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasContent("""
+            8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
+            da39a3ee5e6b4b0d3255bfef95601890afd80709  tagmanifest-sha1.txt
+            3e0eff6102310a45d607a6f34b03c9d77bf98b01  metadata/files.xml
+            0412a92d67d0c42d15fb3a31297f0db477d1fe93  manifest-sha1.txt
+            """);
     }
 }

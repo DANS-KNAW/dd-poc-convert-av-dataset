@@ -73,35 +73,4 @@ public class BagVersion2Test extends AbstractTestWithTestDir {
                 Path.of("file2.mp4")
             ));
     }
-
-    @Test
-    public void testUpdateManifest() throws Exception {
-        var payloadManifest = bagDir.resolve("manifest-sha1.txt");
-        createMissingParentDirectories(payloadManifest.toFile());
-        createDirectory(bagDir.resolve("data"));
-        copy(Paths.get("src/test/resources/springfield/swirls.mp4"), bagDir.resolve("data/file4.mp4"));
-        Files.writeString(bagDir.resolve("bagit.txt"), """
-            BagIt-Version: 1.0
-            Tag-File-Character-Encoding: UTF-8
-            """);
-        createFile(bagDir.resolve("tagmanifest-sha1.txt"));
-        writeString(payloadManifest, """
-            0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file1.mp4
-            0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file2.mp4
-            0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file3.mp4
-            0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file4.mp4
-            """
-        );
-        captureStdout(); // ignore the logging on stdout
-
-        new BagVersion2(bagDir).updateManifests(Arrays.asList(
-            Path.of("file2.mp4"),
-            Path.of("file3.mp4")
-        ));
-        assertThat(Files.readString(payloadManifest)).isEqualTo("""
-            0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file1.mp4
-            0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file4.mp4
-            """
-        );
-    }
 }

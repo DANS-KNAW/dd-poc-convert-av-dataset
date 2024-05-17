@@ -16,11 +16,6 @@
 package nl.knaw.dans.avconvert.core;
 
 import lombok.SneakyThrows;
-import nl.knaw.dans.bagit.domain.Manifest;
-import nl.knaw.dans.bagit.exceptions.InvalidBagitFileFormatException;
-import nl.knaw.dans.bagit.exceptions.MaliciousPathException;
-import nl.knaw.dans.bagit.exceptions.UnparsableVersionException;
-import nl.knaw.dans.bagit.exceptions.UnsupportedAlgorithmException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -36,10 +31,8 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BagVersion2 {
 
@@ -63,7 +56,6 @@ public class BagVersion2 {
                 if (!bagDir.resolve("data").resolve(filepath).toFile().delete()) {
                     throw new IOException("Could not delete " + filepath);
                 }
-                ;
                 // Since we're modifying the list we're iterating over, decrement i to adjust for the next iteration.
                 i--;
             }
@@ -79,27 +71,6 @@ public class BagVersion2 {
         if (elements.getLength() == 0)
             return true;
         return "NONE".equals(elements.item(0).getTextContent());
-    }
-
-    public void updateManifests(List<Path> filesWithNoneNone)
-        throws IOException, NoSuchAlgorithmException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
-        new ManifestsUpdater(bagDir) {
-
-            private final Path dataDir = bagDir.resolve("data");
-
-            @Override
-            public void modifyPayloads(Set<Manifest> payLoadManifests) {
-                payLoadManifests.forEach(this::removeNoneNone);
-            }
-
-            private void removeNoneNone(Manifest manifest) {
-                manifest.getFileToChecksumMap().keySet().removeIf(this::isInNoneNone);
-            }
-
-            private boolean isInNoneNone(Path path) {
-                return filesWithNoneNone.contains(dataDir.relativize(path));
-            }
-        }.update();
     }
 
     public void addVersionOf(String previousVersion) throws IOException {

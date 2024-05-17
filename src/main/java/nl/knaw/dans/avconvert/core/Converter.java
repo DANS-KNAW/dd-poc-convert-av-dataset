@@ -44,13 +44,16 @@ public class Converter {
 
         FileUtils.copyDirectory(inputDir.toFile(), revision1.toFile());
         new AVReplacer(revision1, mapping, filesXml).replaceAVFiles();
+        new ManifestsUpdater(revision1).updateAll();
 
         FileUtils.copyDirectory(revision1.toFile(), revision2.toFile());
         var bag2 = new BagVersion2(revision2);
         bag2.addVersionOf(revision1BagId);
-        bag2.updateManifests(bag2.removeNoneNone(filesXml));
+        ManifestsUpdater.removePayloads(revision2, bag2.removeNoneNone(filesXml));
 
-        // TODO 3rd revision bag: add springfield files
+        FileUtils.copyDirectory(revision2.toFile(), revision3.toFile());
+        // TODO reuse addVersionOf
+        // TODO add springfield files for non playable (.mka .mk4 >5GB)
     }
 
     public static Document readXmlFile(Path path) throws ParserConfigurationException, IOException, SAXException {

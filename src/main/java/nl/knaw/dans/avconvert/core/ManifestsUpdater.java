@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,9 +55,8 @@ public class ManifestsUpdater {
 
     }
 
-    public void update()
-        throws NoSuchAlgorithmException, IOException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
-
+    public void updateAll()
+        throws NoSuchAlgorithmException, IOException {
 
         // TODO Do the datasets have other big files?
         //  Then override visitFile and reuse values for paths not in fileIdToBagLocationMap.values().
@@ -71,7 +71,7 @@ public class ManifestsUpdater {
         ManifestWriter.writeTagManifests(tagManifests, bagitDir, rootDir, fileEncoding);
     }
 
-    public void modifyPayloads(Set<Manifest> payLoadManifests) throws NoSuchAlgorithmException, IOException {
+    protected void modifyPayloads(Set<Manifest> payLoadManifests) throws NoSuchAlgorithmException, IOException {
         var payloadFilesMap = getManifestToDigestMap(payLoadManifests);
         Files.walkFileTree(getDataDir(bag), new CreatePayloadManifestsVistor(payloadFilesMap, true));
         replaceManifests(payLoadManifests, payloadFilesMap);
@@ -86,4 +86,27 @@ public class ManifestsUpdater {
         var algorithms = manifests.stream().map(Manifest::getAlgorithm).toList();
         return createManifestToMessageDigestMap(algorithms);
     }
+
+
+    public static void removePayloads(Path bagDir, List<Path> filesWithNoneNone)
+        throws IOException, NoSuchAlgorithmException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
+        new ManifestsUpdater(bagDir) {
+
+            private final Path dataDir = bagDir.resolve("data");
+
+            @Override
+            public void modifyPayloads(Set<Manifest> payLoadManifests) {
+                payLoadManifests.forEach(this::removeNoneNone);
+            }
+
+            private void removeNoneNone(Manifest manifest) {
+                manifest.getFileToChecksumMap().keySet().removeIf(this::isInNoneNone);
+            }
+
+            private boolean isInNoneNone(Path path) {
+                return filesWithNoneNone.contains(dataDir.relativize(path));
+            }
+        }.updateAll();
+    }
+
 }

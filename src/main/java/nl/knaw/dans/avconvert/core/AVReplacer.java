@@ -63,9 +63,6 @@ public class AVReplacer {
     @SneakyThrows
     public void replaceAVFiles() {
         fileIdToBagLocationMap.keySet().forEach(this::replaceFile);
-        // TODO Do the datasets have other big files?
-        //  Then override modifyPayloads and reuse values for paths not in fileIdToBagLocationMap.values().
-        new ManifestsUpdater(bagDir).update();
     }
 
     private void replaceFile(String key) {
