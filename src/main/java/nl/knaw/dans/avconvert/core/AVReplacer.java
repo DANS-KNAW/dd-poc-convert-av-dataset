@@ -21,8 +21,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -32,7 +30,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
@@ -46,16 +43,17 @@ import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Slf4j
 public class AVReplacer {
-    private static final Logger logger = LoggerFactory.getLogger(AVReplacer.class);
 
     private final Path bagDir;
-    private final Map<String, String> fileIdToExternalLocationMap;
-    private final Map<String, String> fileIdToBagLocationMap;
+    private final Path avDir;
+    private final Map<String, Path> fileIdToExternalLocationMap;
+    private final Map<String, Path> fileIdToBagLocationMap;
 
-    public AVReplacer(Path bagDir, Path csv, Document filesXml)
+    public AVReplacer(Path bagDir, Path csv, Path avDir, Document filesXml)
         throws IOException {
 
         this.bagDir = bagDir;
+        this.avDir = avDir;
         fileIdToExternalLocationMap = readCSV(csv);
         fileIdToBagLocationMap = getIdentifierToDestMap(filesXml);
     }
@@ -68,14 +66,13 @@ public class AVReplacer {
     private void replaceFile(String key) {
         var externalLocation = fileIdToExternalLocationMap.get(key);
         if (isEmpty(externalLocation)) {
-            logger.warn("No external location found for: {}", key);
+            log.warn("No external location found for: {}", key);
         }
         else {
             try {
                 FileUtils.copyFile(
-                    new File(externalLocation),
+                    externalLocation.toFile(),
                     bagDir
-                        .resolve("data")
                         .resolve(fileIdToBagLocationMap.get(key))
                         .toFile()
                 );
@@ -86,24 +83,24 @@ public class AVReplacer {
         }
     }
 
-    private static Map<String, String> readCSV(Path filePath) throws IOException {
-        Map<String, String> records = new HashMap<>();
+    private Map<String, Path> readCSV(Path filePath) throws IOException {
+        Map<String, Path> records = new HashMap<>();
         try (Reader reader = Files.newBufferedReader(filePath);
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
 
             for (CSVRecord csvRecord : csvParser) {
-                var pathInAvDir = csvRecord.get("path-in-AV-dir");
+                var pathInAvDir = csvRecord.get("path_in_AV_dir");
                 if (isNotEmpty(pathInAvDir))
-                    records.put(csvRecord.get("easy-file-id"), pathInAvDir);
+                    records.put(csvRecord.get("easy_file_id"), avDir.resolve(pathInAvDir));
                 else
-                    logger.warn("No AV path found for: {}", csvRecord);
+                    log.warn("No AV path found for: {}", csvRecord);
             }
         }
         return records;
     }
 
-    private Map<String, String> getIdentifierToDestMap(Document filesXml) throws IOException {
-        Map<String, String> identifierToDestMap = new HashMap<>();
+    private Map<String, Path> getIdentifierToDestMap(Document filesXml) throws IOException {
+        Map<String, Path> identifierToDestMap = new HashMap<>();
 
         var fileNodes = filesXml.getElementsByTagName("file");
         for (int i = 0; i < fileNodes.getLength(); i++) {
@@ -111,16 +108,16 @@ public class AVReplacer {
             if (fileElement.getElementsByTagName("dct:source").getLength() > 0) {
                 NodeList identifierNodes = fileElement.getElementsByTagName("dct:identifier");
                 if (identifierNodes.getLength() == 0) {
-                    logger.error("No <dct:identifier> found in: {}", serializeNode(fileElement));
+                    log.error("No <dct:identifier> found in: {}", serializeNode(fileElement));
                 }
                 else {
                     var filePath = fileElement.getAttribute("filepath");
                     if (isEmpty(filePath)) {
-                        logger.error("No filepath attribute found in: {}", serializeNode(fileElement));
+                        log.error("No filepath attribute found in: {}", serializeNode(fileElement));
                     }
-                    else if (0 == Files.size(bagDir.resolve("data").resolve(filePath))) {
+                    else if (0 == Files.size(bagDir.resolve(filePath))) {
                         var identifier = identifierNodes.item(0).getTextContent();
-                        identifierToDestMap.put(identifier, filePath);
+                        identifierToDestMap.put(identifier, Path.of(filePath));
                     }
                 }
             }

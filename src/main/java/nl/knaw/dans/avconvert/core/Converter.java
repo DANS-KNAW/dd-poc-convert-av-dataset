@@ -32,8 +32,9 @@ import static java.nio.file.Files.createDirectories;
 
 @Slf4j
 public class Converter {
+
     @SneakyThrows
-    public void convert(Path inputDir, Path mapping, Path outputDir) {
+    public void convert(Path inputDir, Path mapping, Path avDir, Path springfieldDir, Path outputDir) {
         log.debug("Converting AV dataset from {} to {}", inputDir, outputDir);
         createDirectories(outputDir);
         var revision1BagId = inputDir.toFile().getName();
@@ -43,7 +44,7 @@ public class Converter {
         var filesXml = readXmlFile(inputDir.resolve("metadata/files.xml"));
 
         FileUtils.copyDirectory(inputDir.toFile(), revision1.toFile());
-        new AVReplacer(revision1, mapping, filesXml).replaceAVFiles();
+        new AVReplacer(revision1, mapping, avDir, filesXml).replaceAVFiles();
         new ManifestsUpdater(revision1).updateAll();
 
         FileUtils.copyDirectory(revision1.toFile(), revision2.toFile());

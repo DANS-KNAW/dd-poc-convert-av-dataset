@@ -51,6 +51,9 @@ public class AvConvertCli extends AbstractCommandLineApp<AvConvertConfig> {
                             description = "The directory where the converted dataset will be stored.")
     private Path outputDir;
 
+    private Path avDir;
+    private Path springfieldDir;
+
     public String getName() {
         return "DD Convert AV Dataset";
     }
@@ -58,12 +61,14 @@ public class AvConvertCli extends AbstractCommandLineApp<AvConvertConfig> {
     @Override
     public void configureCommandLine(CommandLine commandLine, AvConvertConfig config) {
         log.debug("Configuring command line");
+        this.avDir = config.getAvDir();
+        this.springfieldDir = config.getSpringfieldDir();
         commandLine.addSubcommand(new ExampleCommand());
     }
 
     @Override
     public Integer call() {
-        new Converter().convert(inputDir, mapping, outputDir);
+        new Converter().convert(inputDir, mapping, avDir, springfieldDir, outputDir);
         return 0;
     }
 }

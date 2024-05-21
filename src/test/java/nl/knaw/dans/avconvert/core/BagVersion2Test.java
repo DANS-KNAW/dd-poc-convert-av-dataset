@@ -18,18 +18,13 @@ package nl.knaw.dans.avconvert.core;
 import nl.knaw.dans.avconvert.AbstractTestWithTestDir;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Set;
 
 import static ch.qos.logback.core.util.FileUtil.createMissingParentDirectories;
-import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectory;
 import static java.nio.file.Files.createFile;
 import static java.nio.file.Files.writeString;
-import static nl.knaw.dans.avconvert.TestUtils.captureStdout;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BagVersion2Test extends AbstractTestWithTestDir {
@@ -50,15 +45,15 @@ public class BagVersion2Test extends AbstractTestWithTestDir {
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/"
                     xmlns:dct="http://purl.org/dc/terms/">
-              <file filepath="file1.mp4">
+              <file filepath="data/file1.mp4">
                 <dct:identifier>file1</dct:identifier>
                 <dct:source>just has to be present</dct:source>
               </file>
-              <file filepath="file2.mp4">
+              <file filepath="data/file2.mp4">
                 <accessibleToRights>NONE</accessibleToRights>
                 <visibleToRights>NONE</visibleToRights>
               </file>
-              <file filepath="file3.mp4">
+              <file filepath="data/file3.mp4">
                 <dct:identifier>file3</dct:identifier>
                 <accessibleToRights>NONE</accessibleToRights>
                 <visibleToRights>ANONYMOUS</visibleToRights>
@@ -69,8 +64,8 @@ public class BagVersion2Test extends AbstractTestWithTestDir {
         var filesXml = Converter.readXmlFile(filesXmlPath);
         assertThat(new BagVersion2(bagDir).removeNoneNone(filesXml))
             .containsExactlyInAnyOrderElementsOf(Set.of(
-                Path.of("file1.mp4"),
-                Path.of("file2.mp4")
+                Path.of("data/file1.mp4"),
+                Path.of("data/file2.mp4")
             ));
     }
 }

@@ -53,8 +53,9 @@ public class BagVersion2 {
                 var filepath = fileElement.getAttribute("filepath");
                 filesWithNoneNone.add(Path.of(filepath));
                 fileElement.getParentNode().removeChild(fileElement);
-                if (!bagDir.resolve("data").resolve(filepath).toFile().delete()) {
-                    throw new IOException("Could not delete " + filepath);
+                var file = bagDir.resolve(filepath).toFile();
+                if (!file.delete()) {
+                    throw new IOException("Could not delete " + file);
                 }
                 // Since we're modifying the list we're iterating over, decrement i to adjust for the next iteration.
                 i--;
