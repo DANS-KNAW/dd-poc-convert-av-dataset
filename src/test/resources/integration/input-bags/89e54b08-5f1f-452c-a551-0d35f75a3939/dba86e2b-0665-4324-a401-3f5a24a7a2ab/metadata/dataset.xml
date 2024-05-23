@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ddm:DDM xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/md/ddm/ https://easy.dans.knaw.nl/schemas/md/ddm/ddm.xsd" xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:ddm="http://easy.dans.knaw.nl/schemas/md/ddm/" xmlns:abr="http://www.den.nl/standaard/166/Archeologisch-Basisregister/" xmlns:gml="http://www.opengis.net/gml" xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/" xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/" xmlns:dct="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/">
+     <ddm:profile>
+       <dc:title>Research Data Nini Hoiting: Home Recordings KAS 02;08.12</dc:title>
+       <dct:description>These video recordings (with limited transcriptions for just a few files) were made by Dr. Nini Hoiting, developmental linguist at the Royal Kentalis institute for the deaf &quot;H.D. Guyot&quot; in Haren, Groningen, the Netherlands, between 1988 and 2009. Most recordings were not used for academic research on language development, but for monitoring the children's language development.</dct:description>
+       
+       
+       <dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>Drs.</dcx-dai:titles>
+        <dcx-dai:initials>O.A.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Crasborn</dcx-dai:surname>
+        
+        
+        <dcx-dai:DAI>info:eu-repo/dai/nl/236136321</dcx-dai:DAI>
+        
+        <dcx-dai:organization>
+        <dcx-dai:name>Radboud University</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:creatorDetails><dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>Dr.</dcx-dai:titles>
+        <dcx-dai:initials>N.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Hoiting</dcx-dai:surname>
+        
+        
+        
+        
+        <dcx-dai:organization>
+        <dcx-dai:name>Kentalis</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:creatorDetails>
+       <ddm:created>2016-11-01</ddm:created>
+       <ddm:available>2019-03-18</ddm:available>
+       <ddm:audience>D36100</ddm:audience>
+       <ddm:accessRights>REQUEST_PERMISSION</ddm:accessRights>
+     </ddm:profile>
+     <ddm:dcmiMetadata>
+       <dct:identifier>KDP 2016 kenmerk 20160314_003</dct:identifier><dct:identifier>NH173</dct:identifier><dct:identifier xsi:type="id-type:URN">urn:nbn:nl:ui:13-tq-wisn</dct:identifier><dct:identifier xsi:type="id-type:DOI">10.17026/dans-zs7-k78c</dct:identifier><dct:identifier xsi:type="id-type:EASY2">easy-dataset:121282</dct:identifier>
+       
+       
+       
+       
+       
+       <ddm:relation scheme="STREAMING_SURROGATE_RELATION">
+        /domain/dans/user/nini/collection/dovekinderen/presentation/easy-dataset:121282
+      </ddm:relation>
+       <ddm:isPartOf scheme="id-type:DOI" href="https://doi.org/10.17026/dans-zk7-tfj8">Thematic collection: Research Data Nini Hoiting: Home Recordings.</ddm:isPartOf>
+       
+       
+       <dct:rightsHolder>Kentalis</dct:rightsHolder>
+       
+       <dc:source>All the videos recorded by Dr. Nini Hoiting constitute primary data recorded in family homes and at the Guyot institute for special education for deaf people.</dc:source>
+       <dct:type xsi:type="dct:DCMIType">Dataset</dct:type>
+       <dct:format>application/pdf</dct:format><dct:format>video/x-matroska</dct:format>
+       
+       
+       <dct:subject>language development</dct:subject><dct:subject>deaf children</dct:subject><dct:subject>sign language</dct:subject>
+       
+       <dct:spatial>Groningen</dct:spatial><dct:spatial>The Netherlands</dct:spatial>
+       <dct:temporal>1988-2009</dct:temporal><dct:temporal>1980-1990</dct:temporal>
+       
+       
+       <dct:license xsi:type="dct:URI">http://dans.knaw.nl/en/about/organisation-and-policy/legal-information/DANSLicence.pdf</dct:license>
+       <dct:language>eng</dct:language><dct:language>nld</dct:language>
+       
+     </ddm:dcmiMetadata>
+   </ddm:DDM>

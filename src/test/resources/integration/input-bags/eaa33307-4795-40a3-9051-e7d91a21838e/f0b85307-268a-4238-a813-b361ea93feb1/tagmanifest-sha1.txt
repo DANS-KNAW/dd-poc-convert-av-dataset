@@ -1,0 +1,8 @@
+629c41d448c77d31ae8477ac694ab1b4eae71721  metadata/dataset.xml
+40cefaff6332abffd450130846cc72d882625a95  metadata/depositor-info/agreements.xml
+8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
+9a242109c3a7442eb721a6039586f3bb03de2135  metadata/emd.xml
+80a602eebb225a7354353f16febb72c117a55e38  bag-info.txt
+8eabf663e9aa1b1867e25042981f3eb4c57b946f  metadata/amd.xml
+585db89ffcf042ebade85deb90068bd124e388e3  manifest-sha1.txt
+eaf1b5880499a90dff0306e6e16074988bcb20e2  metadata/files.xml

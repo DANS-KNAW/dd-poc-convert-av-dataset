@@ -34,7 +34,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
 
     private final Path bagDir = testDir.resolve("bag");
     private final Path filesXmlPath = bagDir.resolve("metadata/files.xml");
-    private final Path csvFile = testDir.resolve("mapping.csv");
+    private final Path csvFile = testDir.resolve("integration/mapping.csv");
 
     @Test
     public void should_replace() throws Exception {

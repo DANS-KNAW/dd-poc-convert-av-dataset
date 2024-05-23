@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ddm:DDM xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/md/ddm/ https://easy.dans.knaw.nl/schemas/md/ddm/ddm.xsd" xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:ddm="http://easy.dans.knaw.nl/schemas/md/ddm/" xmlns:abr="http://www.den.nl/standaard/166/Archeologisch-Basisregister/" xmlns:gml="http://www.opengis.net/gml" xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/" xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/" xmlns:dct="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/">
+     <ddm:profile>
+       <dc:title>Institutions for Collective Action: Kroniek van een Bazenbondje, interview met Peter Essenberg</dc:title>
+       <dct:description>Peter Essenberg is zeventig jaar oud en is zijn bedrijf begonnen op z’n vijftigste. Dat lijkt hem goed af te gaan: hij heeft een holding met diverse werkmaatschappijen die vooral handel drijven met het Midden-Oosten. Die handel is een eclectische mix van schoensmeer tot boten tot cosmetica tot
+energiecentrales.
+In het interview stipt hij aan dat hij nog altijd lid is van het FNV. Een overblijfsel van zijn tijd bij Werkspoor. Hij lijkt meer affiniteit met de wereld van de werknemers te hebben dan met die van de bazen. Al heeft hij geen ziektekostenverzekering meer. Dat is opgehouden toen hij stopte bij Werkspoor.
+Wel is hij lid van het Bazenbondje. Hij ziet dat niet als een ziektekostenverzekering. Mocht die weer nieuw leven worden ingeblazen, dan kan dat via een aparte vereniging die gelieerd is aan het Bazenbondje om op die manier iets van de doelstellingen over te nemen. De reden daarvan is dat ‘Ons Belang’ niet in liquiditeitsproblemen moet komen. Daarom houdt hij graag Jan de Ruyter scherp met kritische vragen en opmerkingen tijdens de vergadering. Hoewel hij vindt dat Jan de Ruyter het goed doet als penningmeester, zal hij dat nooit tegen hem zeggen. Jan en hij kennen elkaar al van kinds af aan. Ze hebben samen op school gezeten. Zelf zit Peter in het bestuur van ‘Gedenk te sterven’.
+Aan het einde van het interview laat hij twee onderdelen van zijn holding zien. Foto’s van plezierjachten en een filmpje van een energiecentrale worden getoond.</dct:description>
+       
+       
+       <dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>MA</dcx-dai:titles>
+        <dcx-dai:initials>E. J.</dcx-dai:initials>
+        <dcx-dai:insertions>de</dcx-dai:insertions>
+        <dcx-dai:surname>Jager</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>ProjectLeader</dcx-dai:role>
+        <dcx-dai:organization>
+        <dcx-dai:name>Stichting Reis van de Razzia</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:creatorDetails>
+       <ddm:created>2016-04-01</ddm:created>
+       <ddm:available>2018-10-22</ddm:available>
+       <ddm:audience>D34300</ddm:audience><ddm:audience>D61000</ddm:audience>
+       <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
+     </ddm:profile>
+     <ddm:dcmiMetadata>
+       <dct:identifier xsi:type="id-type:URN">urn:nbn:nl:ui:13-1q-4zfw</dct:identifier><dct:identifier xsi:type="id-type:DOI">10.17026/dans-2an-vudm</dct:identifier><dct:identifier xsi:type="id-type:EASY2">easy-dataset:112582</dct:identifier>
+       
+       
+       
+       
+       
+       <ddm:relation scheme="STREAMING_SURROGATE_RELATION">
+        /domain/dans/user/bazenbondje/collection/firstcollection/presentation/easy-dataset:112582
+      </ddm:relation>
+       <ddm:relation href="http://www.reisdoorhetachterland.nl">Reis door het Achterland</ddm:relation><ddm:relation href="http://www.collective-action.info">Institutions for Collectie Action</ddm:relation><ddm:relation href="http://www.iasc-commons.org">The International Association for the Study of the Commons (IASC)</ddm:relation><ddm:isPartOf scheme="id-type:DOI" href="https://doi.org/10.17026/dans-z9h-nrev">Thematische collectie: Kroniek van een Bazenbondje </ddm:isPartOf>
+       
+       <dcx-dai:contributorDetails><dcx-dai:author>
+        <dcx-dai:titles>MA</dcx-dai:titles>
+        <dcx-dai:initials>J.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Vinke</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>ProjectMember</dcx-dai:role>
+        <dcx-dai:organization>
+        <dcx-dai:name>Universiteit van Utrecht</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:contributorDetails><dcx-dai:contributorDetails><dcx-dai:author>
+        <dcx-dai:titles>MA</dcx-dai:titles>
+        <dcx-dai:initials>T.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Broere</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>ProjectMember</dcx-dai:role>
+        <dcx-dai:organization>
+        <dcx-dai:name>Stichting Reis van de Razzia</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:contributorDetails><dcx-dai:contributorDetails><dcx-dai:author>
+        
+        <dcx-dai:initials>E.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Hafkamp</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>ProjectMember</dcx-dai:role>
+        <dcx-dai:organization>
+        <dcx-dai:name>Stichting Reis van de Razzia</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:contributorDetails><dcx-dai:contributorDetails><dcx-dai:organization>
+        <dcx-dai:name>Funding agency: Prins Bernard Cultuurfonds Noord-Holland</dcx-dai:name>
+        <dcx-dai:role>ProjectMember</dcx-dai:role>
+      </dcx-dai:organization> </dcx-dai:contributorDetails>
+       <dct:rightsHolder>Stichting Reis van de Razzia</dct:rightsHolder>
+       
+       
+       <dct:type xsi:type="dct:DCMIType">Dataset</dct:type>
+       <dct:format>video/quicktime</dct:format><dct:format>application/pdf</dct:format><dct:format>image/jpeg</dct:format><dct:format>text/plain</dct:format>
+       
+       
+       <dct:subject>oral history</dct:subject><dct:subject>geschiedenis</dct:subject><dct:subject>cultureel erfgoed</dct:subject><dct:subject>coöperatieve verenigingen</dct:subject><dct:subject>commons</dct:subject><dct:subject>broodfonds</dct:subject><dct:subject>arbeidsongeschiktheidsverzekering</dct:subject><dct:subject>zelfstandig ondernemen</dct:subject><dct:subject>zzp-er</dct:subject>
+       
+       <dct:spatial>Amsterdam</dct:spatial><dct:spatial>Nieuwendam</dct:spatial>
+       <dct:temporal>1905-2015</dct:temporal>
+       
+       
+       <dct:license xsi:type="dct:URI">http://creativecommons.org/publicdomain/zero/1.0</dct:license>
+       <dct:language>nld</dct:language>
+       
+     </ddm:dcmiMetadata>
+   </ddm:DDM>

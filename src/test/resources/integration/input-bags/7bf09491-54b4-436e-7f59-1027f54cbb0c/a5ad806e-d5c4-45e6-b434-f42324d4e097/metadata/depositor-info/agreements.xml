@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<agreements xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/agreements/ https://easy.dans.knaw.nl/schemas/bag/metadata/agreements/2019/09/agreements.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/agreements/">
+        <depositAgreement>
+          <signerId easy-account="fdemant" email="fdemant@yahoo.com">F.A. Demant</signerId>
+          <dcterms:dateAccepted>2010-01-19T00:00:00.000+01:00</dcterms:dateAccepted>
+          <depositAgreementAccepted>true</depositAgreementAccepted>
+        </depositAgreement>
+        <personalDataStatement>
+          <notAvailable> </notAvailable>
+        </personalDataStatement>
+      </agreements>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<emd:easymetadata emd:version="0.1" xmlns:emd="http://easy.dans.knaw.nl/easy/easymetadata/" xmlns:eas="http://easy.dans.knaw.nl/easy/easymetadata/eas/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <emd:title>
+    <dc:title>Interview Eva Gonggrijp on Grenzeloze Inhoud</dc:title>
+  </emd:title>
+  <emd:creator>
+    <eas:creator>
+      <eas:title>BA</eas:title>
+      <eas:initials>M.D.</eas:initials>
+      <eas:surname>Ducimetière</eas:surname>
+      <eas:organization>University of Amsterdam</eas:organization>
+      <eas:entityId eas:scheme="DAI" eas:identification-system="info:eu-repo/dai/nl/"/>
+      <eas:role eas:scheme="DATACITE">Researcher</eas:role>
+    </eas:creator>
+    <eas:creator>
+      <eas:title>BA</eas:title>
+      <eas:initials>A.S.</eas:initials>
+      <eas:surname>Soulioti</eas:surname>
+      <eas:organization>University of Amsterdam</eas:organization>
+      <eas:entityId eas:scheme="DAI" eas:identification-system="info:eu-repo/dai/nl/"/>
+      <eas:role eas:scheme="DATACITE">Researcher</eas:role>
+    </eas:creator>
+  </emd:creator>
+  <emd:subject>
+    <dc:subject>Conservering en Restauratie van Cultureel Erfgoed</dc:subject>
+    <dc:subject>Conservation and Restoration of Cultural Heritage</dc:subject>
+    <dc:subject>Grenzeloze Inhoud</dc:subject>
+    <dc:subject>Verhalen uit een Bagagedepot</dc:subject>
+    <dc:subject>Mondelinge Geschiedenis</dc:subject>
+    <dc:subject>Oral History</dc:subject>
+    <dc:subject>Kunstwerk</dc:subject>
+    <dc:subject>Artwork</dc:subject>
+    <dc:subject>Conservering</dc:subject>
+    <dc:subject>Conservation</dc:subject>
+    <dc:subject>Restauratie</dc:subject>
+    <dc:subject>Restoration</dc:subject>
+    <dc:subject>Materialen en Technieken</dc:subject>
+    <dc:subject>Materials and Techniques</dc:subject>
+    <dc:subject>Maakproces</dc:subject>
+    <dc:subject>Making Process</dc:subject>
+    <dc:subject>Rijksdienst Beeldende Kunst (RBK)</dc:subject>
+    <dc:subject>Cultural Heritage Agency of the Netherlands</dc:subject>
+    <dc:subject>Rijksdienst voor het Cultureel Erfgoed (RCE)</dc:subject>
+    <dc:subject>Rijkscollectie</dc:subject>
+    <dc:subject>State Collection</dc:subject>
+    <dc:subject>De Reis</dc:subject>
+    <dc:subject>John den Besten</dc:subject>
+    <dc:subject>Kunstenaarsinterview</dc:subject>
+    <dc:subject>Artist Interview</dc:subject>
+    <dc:subject>Hedendaagse Kunst</dc:subject>
+    <dc:subject>Contemporary Art</dc:subject>
+    <dc:subject>BK-informatie</dc:subject>
+    <dc:subject>Nederlandse Kunststichting</dc:subject>
+    <dc:subject>Koffer</dc:subject>
+    <dc:subject>Suitcase</dc:subject>
+    <dc:subject>Plastics</dc:subject>
+    <dc:subject>Reizende tentoonstelling</dc:subject>
+    <dc:subject>Traveling exhibition</dc:subject>
+    <dc:subject>Universiteit van Amsterdam</dc:subject>
+    <dc:subject>University of Amsterdam</dc:subject>
+    <dc:subject>Poetry</dc:subject>
+    <dc:subject>Michael Gibbs</dc:subject>
+    <dc:subject>Words</dc:subject>
+    <dc:subject>Eva Gonggrijp</dc:subject>
+    <dc:subject>William Burroughts</dc:subject>
+    <dc:subject>John Klinkenberg</dc:subject>
+  </emd:subject>
+  <emd:description>
+    <dc:description>Michael Gibbs took part in the project &quot;Traveling exhibition&quot; in 1983. He decided to perforate the suitcase designed by John den Besten with bullets. Unfortunately, the artist passed away in 2007. This interview is with Eva Gonggrijp, his widow. She describes in more detail the philosophy behind Michael Gibbs' art.</dc:description>
+  </emd:description>
+  <emd:publisher>
+    <dc:publisher>University of Amsterdam</dc:publisher>
+  </emd:publisher>
+  <emd:contributor/>
+  <emd:date>
+    <eas:created eas:scheme="W3CDTF" eas:format="DAY">2020-03-05T00:00:00.000+01:00</eas:created>
+    <eas:available eas:scheme="W3CDTF" eas:format="DAY">2021-08-07T00:00:00.000+02:00</eas:available>
+  </emd:date>
+  <emd:type>
+    <dc:type eas:schemeId="common.dc.type" eas:scheme="DCMI">Dataset</dc:type>
+  </emd:type>
+  <emd:format>    
+<dc:format eas:schemeId="common.dc.format" eas:scheme="IMT">application/pdf</dc:format>
+    <dc:format eas:schemeId="common.dc.format" eas:scheme="IMT">video/mpeg</dc:format>
+  </emd:format>
+  <emd:identifier>
+    <dc:identifier eas:scheme="PID" eas:identification-system="http://www.persistent-identifier.nl">urn:nbn:nl:ui:13-8w-asc6</dc:identifier>
+    <dc:identifier eas:scheme="DOI" eas:identification-system="https://doi.org">10.17026/dans-zb9-cufs</dc:identifier>
+    <dc:identifier eas:scheme="DMO_ID">easy-dataset:218800</dc:identifier>
+  </emd:identifier>
+  <emd:source/>
+  <emd:language>
+    <dc:language eas:schemeId="common.dc.language" eas:scheme="ISO 639">eng</dc:language>
+    <dc:language eas:schemeId="common.dc.language" eas:scheme="ISO 639">dut/nld</dc:language>
+  </emd:language>
+  <emd:relation>
+    <dc:relation eas:scheme="STREAMING_SURROGATE_RELATION">/domain/dans/user/Sanneke/collection/Grenzeloze/presentation/easy-dataset:218800</dc:relation>
+    <dct:isReferencedBy>ducimeti�remarie_Treatment Report Gibbs</dct:isReferencedBy>
+    <dct:references>Beer, Evelyne / Nederlandse Kunststichting. Grenzeloze inhoud: verhalen uit een bagagedep�t. Catalogus reizende tentoonstelling Nederlandse Kunststichting. Nuth: Rosbeek, 1983</dct:references>
+    <eas:relation eas:emphasis="true">
+      <eas:subject-title>Thematische collectie: Interviews in Conservation Research</eas:subject-title>
+      <eas:subject-link>https://doi.org/10.17026/dans-zja-88ta</eas:subject-link>
+    </eas:relation>
+  </emd:relation>
+  <emd:coverage/>
+  <emd:rights>
+    <dct:accessRights eas:schemeId="common.dcterms.accessrights">OPEN_ACCESS</dct:accessRights>
+    <dct:rightsHolder>University of Amsterdam</dct:rightsHolder>
+  </emd:rights>
+  <emd:audience>
+    <dct:audience eas:schemeId="custom.disciplines">easy-discipline:1</dct:audience>
+    <dct:audience eas:schemeId="custom.disciplines">easy-discipline:3</dct:audience>
+  </emd:audience>
+  <emd:other>
+    <eas:application-specific>
+      <eas:metadataformat>ANY_DISCIPLINE</eas:metadataformat>
+      <eas:pakbon-status>NOT_IMPORTED</eas:pakbon-status>
+      <eas:archive eas:location="DATAVAULT"/>
+    </eas:application-specific>
+    <eas:etc/>
+  </emd:other>
+</emd:easymetadata>

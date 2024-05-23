@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ddm:DDM xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/md/ddm/ https://easy.dans.knaw.nl/schemas/md/ddm/ddm.xsd" xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:ddm="http://easy.dans.knaw.nl/schemas/md/ddm/" xmlns:abr="http://www.den.nl/standaard/166/Archeologisch-Basisregister/" xmlns:gml="http://www.opengis.net/gml" xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/" xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/" xmlns:dct="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/">
+     <ddm:profile>
+       <dc:title>Kindertransporten 'Joodse kinderen in kamp Vught' - Montage (2007) Eindpunt Sobibor</dc:title>
+       <dct:description>Eindpunt Sobibor' is een korte montage (lengte: 00:10:06) uit het getuigeninterview met Jules Schelvis. Hij vertelt over de aankomst in Sobibor op 4 juni 1943 en de verwachtingen die ze nog altijd hadden, namelijk dat het een werkkamp zou zijn. Zogenaamde Arbeitsjuden haalden hen ruw uit de trein, waarna ze hun bezittingen in een barak moesten achterlaten. In de chaos had Jules niet door dat mannen en vrouwen gescheiden werden. Toen even later er jonge sterke mannen werden uitgeselecteerd, zorgde Jules dat hij hier ook bij kwam. Nog steeds onwetend van het lot van de anderen.
+
+Zie ook het getuigeninterview met Jules Schelvis
+(07_JKKV_2004_JULES_SCHELVIS)</dct:description>
+       
+       
+       <dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>drs.</dcx-dai:titles>
+        <dcx-dai:initials>E.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Klijn</dcx-dai:surname>
+        
+        
+        
+        
+        <dcx-dai:organization>
+        <dcx-dai:name>NIOD</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:creatorDetails><dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>kand.</dcx-dai:titles>
+        <dcx-dai:initials>M.C.C.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Huffener</dcx-dai:surname>
+        
+        
+        
+        
+        
+      </dcx-dai:author> </dcx-dai:creatorDetails>
+       <ddm:created>2003-01-01</ddm:created>
+       <ddm:available>2019-11-08</ddm:available>
+       <ddm:audience>D34000</ddm:audience><ddm:audience>D30000</ddm:audience><ddm:audience>D34300</ddm:audience>
+       <ddm:accessRights>OPEN_ACCESS_FOR_REGISTERED_USERS</ddm:accessRights>
+     </ddm:profile>
+     <ddm:dcmiMetadata>
+       <dct:identifier xsi:type="id-type:URN">urn:nbn:nl:ui:13-8359-zx</dct:identifier><dct:identifier xsi:type="id-type:DOI">10.17026/dans-z4w-9rz7</dct:identifier><dct:identifier xsi:type="id-type:EASY2">easy-dataset:155170</dct:identifier>
+       
+       
+       
+       
+       
+       <ddm:relation scheme="STREAMING_SURROGATE_RELATION">
+        /domain/dans/user/NIOD/collection/joodsekinderenvught/presentation/easy-dataset:155170
+      </ddm:relation>
+       <ddm:relation href="http://www.joodsekindereninkampvught.nl/">Website: Joodse kinderen in kamp Vught</ddm:relation><ddm:relation href="http://www.persistent-identifier.nl?identifier=urn:nbn:nl:ui:13-ysp4-eo">Thematische collectie: Kindertransporten 'Joodse kinderen in kamp Vught', Interviews (2003) en documentaires (2007) JKKV</ddm:relation>
+       
+       <dcx-dai:contributorDetails><dcx-dai:author>
+        
+        <dcx-dai:initials>J.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Bohnen</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>Producer</dcx-dai:role>
+        
+      </dcx-dai:author> </dcx-dai:contributorDetails><dcx-dai:contributorDetails><dcx-dai:author>
+        <dcx-dai:titles>drs.</dcx-dai:titles>
+        <dcx-dai:initials>A.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Bakker</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>Editor</dcx-dai:role>
+        
+      </dcx-dai:author> </dcx-dai:contributorDetails><dcx-dai:contributorDetails><dcx-dai:author>
+        
+        <dcx-dai:initials>J.</dcx-dai:initials>
+        <dcx-dai:insertions>de</dcx-dai:insertions>
+        <dcx-dai:surname>Moei</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>Researcher</dcx-dai:role>
+        
+      </dcx-dai:author> </dcx-dai:contributorDetails>
+       <dct:rightsHolder>NIOD</dct:rightsHolder>
+       
+       <dc:source>In september 1999 werd op het terrein van het herdenkingscentrum Nationaal Monument Kamp Vught een gedenkteken voor het Kindertransport naar Sobibor geplaatst. Op dit kindermonument staan alle namen en leeftijden van de 1269 kinderen die niet overleefden. Ter gelegenheid van de plaatsing van het monument schreef Janneke de Moei het boek ‘Joodse kinderen in het kamp Vught’.
+Het kindermonument maakt grote indruk. Janneke de Moei en Mirjam Huffener constateerden dat er behoefte was aan goed en eigentijds educatief materiaal. Zij richtten met Jules Schelvis de werkgroep ZART (verbonden aan de Stichting Sobibor) op.
+
+Januari 2003 realiseerde deze werkgroep acht interviews van elk 2 uur afgenomen met nabestaanden van deze kindertransporten.
+
+Deze interviews werden gebruikt om een driedelige documentaire te maken ‘Als ik later groot ben’. Deze documentaire werd later opgenomen in een dvd met diverse korte en langere documentaires, behorend bij een lesdoos die in 2007 gerealiseerd werd.
+Kern van de lesdoos is de korte documentaire (17 minuten) geschikt voor VMBO t/m VWO: “Wat kunnen ze nou met ons doen?” Deze uitspraak is afkomstig van een van de geïnterviewde ooggetuigen. Het typeert de verbazing van de geassimileerde Nederlandse Joden die, gelovig of niet-gelovig, een normaal leven leidden totdat ze uit de samenleving werden verbannen.
+
+Het verhaal van het Kindertransport is in 2011 belicht in de vorm van een expositie. Deze reizende tentoonstelling kreeg de titel: ‘Alle kinderen, ze zijn weg’ en werd op 5 juni 2011 in Nationaal Monument Kamp Vught geopend.</dc:source>
+       <dct:type xsi:type="dct:DCMIType">Dataset</dct:type>
+       <dct:format>application/pdf</dct:format><dct:format>application/msword</dct:format><dct:format>video/mp4</dct:format>
+       
+       
+       <dct:subject>Subject</dct:subject><dct:subject>Oral history</dct:subject><dct:subject>Verwachtingen</dct:subject><dct:subject>Misleiding</dct:subject><dct:subject>Overleven</dct:subject><dct:subject>Arbeitsjuden</dct:subject><dct:subject>Jules Schelvis</dct:subject><dct:subject>Schoonvader David Borzykowski</dct:subject><dct:subject>Zwager Herman Borzykowski</dct:subject><dct:subject>Tweede Wereldoorlog</dct:subject>
+       
+       <dct:spatial>Sobibor</dct:spatial>
+       <dct:temporal>1943</dct:temporal>
+       
+       
+       <dct:license xsi:type="dct:URI">http://dans.knaw.nl/en/about/organisation-and-policy/legal-information/DANSLicence.pdf</dct:license>
+       <dct:language>nld</dct:language>
+       
+     </ddm:dcmiMetadata>
+   </ddm:DDM>

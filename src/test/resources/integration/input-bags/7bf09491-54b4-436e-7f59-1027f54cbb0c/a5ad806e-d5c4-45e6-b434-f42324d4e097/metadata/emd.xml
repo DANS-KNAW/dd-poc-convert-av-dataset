@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<emd:easymetadata emd:version="0.1" xmlns:emd="http://easy.dans.knaw.nl/easy/easymetadata/" xmlns:eas="http://easy.dans.knaw.nl/easy/easymetadata/eas/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <emd:title>
+    <dc:title>Getuigen Verhalen, Ervaringen van Nederlandse burgers met ingekwartierde Duitse militairen, interview 08</dc:title>
+  </emd:title>
+  <emd:creator>
+    <dc:creator>Demant, F.A. drs.</dc:creator>
+    <dc:creator>Caleidoscoop Film</dc:creator>
+    <eas:creator>
+      <eas:organization>UvA</eas:organization>
+      <eas:entityId eas:scheme="DAI"/>
+    </eas:creator>
+  </emd:creator>
+  <emd:subject>
+    <dc:subject>bezetting</dc:subject>
+    <dc:subject>dagelijks leven</dc:subject>
+    <dc:subject>inkwartiering</dc:subject>
+    <dc:subject>Duitse militairen</dc:subject>
+    <dc:subject>Duitsers</dc:subject>
+    <dc:subject>Canadezen</dc:subject>
+    <dc:subject>bevrijding</dc:subject>
+    <dc:subject>Philips Kommando</dc:subject>
+    <dc:subject>Oral history</dc:subject>
+    <dc:subject>Tweede Wereldoorlog</dc:subject>
+  </emd:subject>
+  <emd:description>
+    <dc:description>De heer Jochems, geboren in 1929, heeft in 1940 twee maal Duitse militairen in huis ingekwartierd gehad.         
+         
+De vader van meneer Jochems was huidarts en had een praktijk aan huis. In het grote huis werden in juli t/m september 1940 achtereenvolgens twee Duitse officieren ingekwartierd. De eerste was een vriendelijke man met wie de vader van de heer Jochems wel eens sprak. De tweede officier was een SS-er met wie de familie geen contact had. In 1943 is de vader van meneer Jochems aan kanker overleden. Meneer Jochems was altijd erg actief in verschillende verenigingen en was als jongen van vijftien ordonnans van de luchtbescherming. Meneer Jochems zat aan het begin van de bezetting op de openbare lagere school met een aantal joodse leerlingen in de klas. Hij is daarna naar een katholiek lyceum gegaan en is het contact met de leerlingen van de lagere school kwijtgeraakt. Hij heeft zich ten tijde van de bezetting niet gerealiseerd wat het lot van de joden was. Zijn ouders spraken daar ook niet over.         
+         
+Na de bezetting zijn er Engelsen en Canadezen ingekwartierd geweest. De Canadezen bleven voor wat langere tijd en daar konden meneer Jochems en zijn moeder het zeer goed mee vinden.         
+         
+Ruim tien jaar geleden heeft er een reünie van de klas van de lagere school van meneer Jochems plaatsgevonden. Toen heeft hij alle verhalen gehoord over wat de joodse leerlingen is overkomen. Hij hoorde toen van de rol van het Philips Kommando in Kamp Vught, en is zich daarin gaan verdiepen. Hij heeft de stichting Geschiedschrijving Philips Kommando Concentratiekamp Vught ’43-’44 opgericht en is daar nog steeds zeer actief bij betrokken.         
+         
+Er komen enkele onderwerpen van publieke discussies ter sprake: het optreden van Johan Heesters en de ervaringen van NSB-kinderen.</dc:description>
+  </emd:description>
+  <emd:contributor>
+    <dc:contributor>March 21 Audiovisuele Producties</dc:contributor>
+  </emd:contributor>
+  <emd:date>
+    <eas:created eas:scheme="W3CDTF" eas:format="DAY">2009-11-26T00:00:00.000+01:00</eas:created>
+    <eas:available eas:scheme="W3CDTF" eas:format="DAY">2012-01-19T00:00:00.000+01:00</eas:available>
+    <eas:dateSubmitted eas:scheme="W3CDTF" eas:format="DAY">2010-01-19T00:00:00.000+01:00</eas:dateSubmitted>
+  </emd:date>
+  <emd:format>
+    <dc:format>video/mp4</dc:format>
+    <dc:format>MS-Word</dc:format>
+    <dc:format>mp4 h264</dc:format>
+  </emd:format>
+  <emd:identifier>
+    <dc:identifier eas:scheme="AIP_ID">twips.dans.knaw.nl-8857738266002516367-1263811787525</dc:identifier>
+    <dc:identifier eas:scheme="PID" eas:identification-system="http://www.persistent-identifier.nl">urn:nbn:nl:ui:13-5mm-wom</dc:identifier>
+    <dc:identifier eas:scheme="DMO_ID">easy-dataset:41418</dc:identifier>
+    <dc:identifier eas:scheme="DOI" eas:identification-system="http://dx.doi.org">10.17026/dans-xvp-66e2</dc:identifier>
+  </emd:identifier>
+  <emd:source/>
+  <emd:language>
+    <dc:language eas:schemeId="common.dc.language" eas:scheme="ISO 639">dut/nld</dc:language>
+  </emd:language>
+  <emd:relation>
+    <dc:relation eas:scheme="STREAMING_SURROGATE_RELATION">/domain/dans/user/Caleidoscoop_Film/collection/Ingekwartierde_Duitse_militairen/presentation/easy-dataset:41418</dc:relation>
+    <eas:relation eas:emphasis="true">
+      <eas:subject-title>Getuigen Verhalen, Project 'Ervaringen van Nederlandse burgers met ingekwartierde Duitse militairen'</eas:subject-title>
+      <eas:subject-link>https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:41479</eas:subject-link>
+    </eas:relation>
+    <eas:relation eas:emphasis="true">
+      <eas:subject-title>Erfgoed van de oorlog projecten</eas:subject-title>
+      <eas:subject-link>https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:33963</eas:subject-link>
+    </eas:relation>
+  </emd:relation>
+  <emd:coverage>
+    <dct:spatial>Tilburg</dct:spatial>
+    <dct:temporal>1940-1945</dct:temporal>
+    <dct:temporal>heden</dct:temporal>
+  </emd:coverage>
+  <emd:rights>
+    <dct:accessRights eas:schemeId="common.dcterms.accessrights">OPEN_ACCESS</dct:accessRights>
+    <dct:license eas:scheme="EASY version 1">accept</dct:license>
+  </emd:rights>
+  <emd:audience>
+    <dct:audience eas:schemeId="custom.disciplines">easy-discipline:11</dct:audience>
+  </emd:audience>
+  <emd:other>
+    <eas:application-specific>
+      <eas:metadataformat>SOCIOLOGY</eas:metadataformat>
+    </eas:application-specific>
+    <eas:etc>
+      <property-list>
+        <comment>Synchronization of EasyII</comment>
+        <entry key="conversion.date">2011-07-19T10:17:53.936Z</entry>
+        <entry key="previous.collection-id">twips.dans.knaw.nl-8857738266002516367-1263811787525</entry>
+        <entry key="nl.knaw.dans.easy.tools.task.am.dataset.AudienceCorrectorTask">2011-07-20T19:22:28.532+02:00</entry>
+      </property-list>
+    </eas:etc>
+  </emd:other>
+</emd:easymetadata>

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<files xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:afm="http://easy.dans.knaw.nl/schemas/bag/metadata/afm/" xmlns:dct="http://purl.org/dc/terms/">
+    <file filepath="data/original/bijlage Gb interviewer 08.pdf">
+        
+        <dct:identifier>easy-file:2465781</dct:identifier>
+        <dct:title>bijlage Gb interviewer 08.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.0MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/GV_CaleidoscoopFilm_ingekwartierd_08.doc">
+        
+        <dct:identifier>easy-file:2465782</dct:identifier>
+        <dct:title>GV_CaleidoscoopFilm_ingekwartierd_08.doc</dct:title>
+        <dct:format>application/vnd.ms-word</dct:format>
+        <dct:extent>0.2MB</dct:extent>
+        
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/GV_CaleidoscoopFilm_ingekwartierd_08.pdf">
+        
+        <dct:identifier>easy-file:6227174</dct:identifier>
+        <dct:title>GV_CaleidoscoopFilm_ingekwartierd_08.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.4MB</dct:extent>
+        
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        <dct:source>data/GV_CaleidoscoopFilm_ingekwartierd_08.doc</dct:source>
+      </file><file filepath="data/audio-video/GV_Demant_ingekwartierd_08.mp4">
+        
+        <dct:identifier>easy-file:5455618</dct:identifier>
+        <dct:title>GV_Demant_ingekwartierd_08.mp4</dct:title>
+        <dct:format>video/mp4</dct:format>
+        <dct:extent>2693.2MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://legacy-storage.dans.knaw.nl/data/Getuigenverhalen/Caleidoscoop/GV_Demant_Ingekwartierd/GV_Demant_ingekwartierd_08.mp4</dct:source>
+        
+        
+      </file><file filepath="data/original/GV_Demant_ingekwartierd_08.doc">
+        
+        <dct:identifier>easy-file:2465779</dct:identifier>
+        <dct:title>GV_Demant_ingekwartierd_08.doc</dct:title>
+        <dct:format>application/vnd.ms-word</dct:format>
+        <dct:extent>0.3MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/original/bijlage Fb geinterviewde 08.pdf">
+        
+        <dct:identifier>easy-file:2465780</dct:identifier>
+        <dct:title>bijlage Fb geinterviewde 08.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.0MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        
+        
+        
+      </file>
+    </files>

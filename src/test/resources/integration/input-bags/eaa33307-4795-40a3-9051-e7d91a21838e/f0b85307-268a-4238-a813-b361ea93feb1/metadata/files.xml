@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<files xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:afm="http://easy.dans.knaw.nl/schemas/bag/metadata/afm/" xmlns:dct="http://purl.org/dc/terms/">
+    <file filepath="data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_1.pdf">
+        
+        <dct:identifier>easy-file:7296382</dct:identifier>
+        <dct:title>ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_1.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>3.8MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/eaa33307-4795-40a3-9051-e7d91a21838e/data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_1.pdf</dct:source>
+        
+        
+      </file><file filepath="data/(14)ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_2.pdf">
+        
+        <dct:identifier>easy-file:7296380</dct:identifier>
+        <dct:title>(14)ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_2.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.0MB</dct:extent>
+        
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg.mov">
+        
+        <dct:identifier>easy-file:7296379</dct:identifier>
+        <dct:title>ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg.mov</dct:title>
+        <dct:format>video/quicktime</dct:format>
+        <dct:extent>7054.8MB</dct:extent>
+        
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/eaa33307-4795-40a3-9051-e7d91a21838e/data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg.mov</dct:source>
+        
+        
+      </file><file filepath="data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_0.txt">
+        
+        <dct:identifier>easy-file:7296381</dct:identifier>
+        <dct:title>ICA_DeJager_KroniekvaneenBazenbondje_Interview_Peter_Essenberg_0.txt</dct:title>
+        <dct:format>text/plain</dct:format>
+        <dct:extent>0.0MB</dct:extent>
+        
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Erik_de_Jager_1.pdf">
+        
+        <dct:identifier>easy-file:7296378</dct:identifier>
+        <dct:title>ICA_DeJager_KroniekvaneenBazenbondje_Interview_Erik_de_Jager_1.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>3.3MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/eaa33307-4795-40a3-9051-e7d91a21838e/data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Erik_de_Jager_1.pdf</dct:source>
+        
+        
+      </file><file filepath="data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Joost_Vinke_1.pdf">
+        
+        <dct:identifier>easy-file:7296383</dct:identifier>
+        <dct:title>ICA_DeJager_KroniekvaneenBazenbondje_Interview_Joost_Vinke_1.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>3.9MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/eaa33307-4795-40a3-9051-e7d91a21838e/data/ICA_DeJager_KroniekvaneenBazenbondje_Interview_Joost_Vinke_1.pdf</dct:source>
+        
+        
+      </file>
+    </files>
