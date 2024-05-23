@@ -1,3 +1,5 @@
+avDir: /data/av-test-dir
+springfieldDir: /data/springfield-test-dir
 
 #
 # See https://www.dropwizard.io/en/latest/manual/configuration.html#logging

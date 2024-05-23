@@ -19,8 +19,19 @@ import io.dropwizard.core.Configuration;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.nio.file.Path;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class AvConvertConfig extends Configuration {
 
+    @Valid
+    @NotNull
+    private Path avDir;
+
+    @Valid
+    @NotNull
+    private Path springfieldDir;
 }
