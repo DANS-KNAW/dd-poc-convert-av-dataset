@@ -1,6 +1,9 @@
 package nl.knaw.dans.avconvert.core;
 
 import nl.knaw.dans.avconvert.AbstractTestWithTestDir;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -15,7 +18,15 @@ import java.util.stream.Stream;
 import static nl.knaw.dans.avconvert.TestUtils.captureStdout;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IntegrationTest extends AbstractTestWithTestDir {
+public class IntegrationTest {
+
+    private static final Path testDir = Path.of("target/test")
+        .resolve(IntegrationTest.class.getSimpleName());
+
+    @BeforeAll
+    public static void setUpOnce() throws Exception {
+        FileUtils.deleteDirectory(testDir.toFile());
+    }
 
     private static final Path sources = Paths.get("src/test/resources/integration/");
 
@@ -25,6 +36,7 @@ public class IntegrationTest extends AbstractTestWithTestDir {
             path.getParent().getParent().equals(bagParents)
         );
     }
+
 
     @ParameterizedTest
     @MethodSource("bagProvider")
@@ -48,7 +60,7 @@ public class IntegrationTest extends AbstractTestWithTestDir {
         assertThat(new HashSet<>(manifests))
             .containsExactlyInAnyOrderElementsOf(manifests);
 
-        // TODO validate created bags and is-version-of chain
+        // TODO validate bags manually
     }
 
     private String readSorted(Path path) {
