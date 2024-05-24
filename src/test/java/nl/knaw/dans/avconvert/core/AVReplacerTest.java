@@ -52,8 +52,9 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         Files.writeString(csvFile, """
             easy_file_id,path_in_AV_dir,path_in_springfield_dir
             file1,marbles.mp4,
-            file2,,swirls.mp4,causes logging
-            file9,,causes logging"""
+            file2,,swirls.mp4,causes logging,
+            file9,,causes logging
+            fileA,%s/bag/data/file""".formatted(bagDir.getParent())
         );
         Files.writeString(filesXmlPath, """
             <files
@@ -99,9 +100,11 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
 
         var messages = logger.list.stream().map(ILoggingEvent::getFormattedMessage).toList();
-        assertThat(messages.get(0)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , swirls.mp4, causes logging]]");
+        assertThat(messages.get(0)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , swirls.mp4, causes logging, ]]");
         assertThat(messages.get(1)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=3, values=[file9, , causes logging]]");
-        assertThat(messages.get(4)).isEqualTo("No external location found for: file2");
+        assertThat(messages.get(4)).isEqualTo("Elements in fileIdsInMapping but not in replacedFileIds: [fileA]");
+        assertThat(messages.get(5)).isEqualTo("Elements in replacedFileIds but not in fileIdsInMapping: [file2, file1]");
+        assertThat(messages.get(6)).isEqualTo("No external location found for: file2");// not for file1: it exists but lacks the UUID in the mapping
         assertThat(messages.get(2)).isEqualTo("""
             No <dct:identifier> found in: <?xml version="1.0" encoding="UTF-8"?><file filepath="data/file3.mp4" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/">
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
@@ -112,7 +115,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
               </file>"""
         );
-        assertThat(messages).hasSize(5);
+        assertThat(messages).hasSize(7);
 
         // TODO: move this part of the test together with the assertions
         ManifestsUpdater.updateAllPayloads(bagDir);
@@ -122,7 +125,6 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             """);
         assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasContent("""
             8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
-            da39a3ee5e6b4b0d3255bfef95601890afd80709  tagmanifest-sha1.txt
             d9aeb25aeaf4bc50d4355cfa1d766635d2604c04  metadata/files.xml
             0412a92d67d0c42d15fb3a31297f0db477d1fe93  manifest-sha1.txt
             """);

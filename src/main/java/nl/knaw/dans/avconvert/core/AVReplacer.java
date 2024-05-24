@@ -36,7 +36,9 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
@@ -56,11 +58,35 @@ public class AVReplacer {
         this.avDir = avDir;
         fileIdToExternalLocationMap = readCSV(csv);
         fileIdToBagLocationMap = getIdentifierToDestMap(filesXml);
+        crossCheckReplacedMapped();
     }
 
     @SneakyThrows
     public void replaceAVFiles() {
         fileIdToBagLocationMap.keySet().forEach(this::replaceFile);
+    }
+
+    private void crossCheckReplacedMapped() {
+        var bagParent = bagDir.getParent().getFileName().toString();
+        var replacedFileIds = fileIdToBagLocationMap.keySet();
+        var mappedFileIds = new HashSet<>(fileIdToExternalLocationMap.keySet().stream()
+            // when reading the csv, the values are prefixed with the avDir, so we can't use startsWith,
+            // the bagParent is supposed to be a UUID hence unique
+            .filter(kv -> fileIdToExternalLocationMap.get(kv).toString().contains(bagParent))
+            .toList()
+        );
+
+        // Create sets for the differences
+        Set<String> onlyInMapping = new HashSet<>(mappedFileIds);
+        onlyInMapping.removeAll(replacedFileIds);
+        Set<String> onlyInReplaced = new HashSet<>(replacedFileIds);
+        onlyInReplaced.removeAll(mappedFileIds);
+
+        // Log the differences
+        if (!onlyInMapping.isEmpty())
+            log.error("Elements in fileIdsInMapping but not in replacedFileIds: {}", onlyInMapping);
+        if (!onlyInReplaced.isEmpty())
+            log.error("Elements in replacedFileIds but not in fileIdsInMapping: {}", onlyInReplaced);
     }
 
     private void replaceFile(String key) {
