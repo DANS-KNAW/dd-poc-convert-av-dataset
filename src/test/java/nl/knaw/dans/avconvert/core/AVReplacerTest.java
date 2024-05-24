@@ -115,7 +115,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         assertThat(messages).hasSize(5);
 
         // TODO: move this part of the test together with the assertions
-        new ManifestsUpdater(bagDir).updateAll();
+        ManifestsUpdater.updateAllPayloads(bagDir);
         assertThat(bagDir.resolve("manifest-sha1.txt")).hasContent("""
             da39a3ee5e6b4b0d3255bfef95601890afd80709  data/file2.mp4
             ab8e3b0d1cb0b5f057703257e87b7903b24d8890  data/file1.mp4

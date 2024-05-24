@@ -56,8 +56,8 @@ public class ManifestUpdaterTest extends AbstractTestWithTestDir {
         captureStdout(); // ignore the logging on stdout
 
         ManifestsUpdater.removePayloads(bagDir, Arrays.asList(
-            Path.of("file2.mp4"),
-            Path.of("file3.mp4")
+            Path.of("data/file2.mp4"),
+            Path.of("data/file3.mp4")
         ));
         assertThat(Files.readString(payloadManifest)).isEqualTo("""
             0a4d55a8d778e5022fab701977c5d840bbc486d0  data/file1.mp4
