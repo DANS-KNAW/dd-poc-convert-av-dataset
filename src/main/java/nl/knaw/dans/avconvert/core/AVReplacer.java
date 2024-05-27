@@ -50,14 +50,16 @@ public class AVReplacer {
     private final Path avDir;
     private final Map<String, Path> fileIdToExternalLocationMap;
     private final Map<String, Path> fileIdToBagLocationMap;
+    private final String parentOfInputBag;
 
-    public AVReplacer(Path bagDir, Path csv, Path avDir, Document filesXml)
+    public AVReplacer(Path bagDir, Path csv, Path avDir, Document filesXml, Path parentOfInputBag)
         throws IOException {
 
         this.bagDir = bagDir;
         this.avDir = avDir;
         fileIdToExternalLocationMap = readCSV(csv);
         fileIdToBagLocationMap = getIdentifierToDestMap(filesXml);
+        this.parentOfInputBag = parentOfInputBag.getFileName().toString();
         crossCheckReplacedMapped();
     }
 
@@ -66,8 +68,8 @@ public class AVReplacer {
         fileIdToBagLocationMap.keySet().forEach(this::replaceFile);
     }
 
-    private void crossCheckReplacedMapped() {
-        var bagParent = bagDir.getParent().getFileName().toString();
+    private void crossCheckReplacedMapped() throws IOException {
+        var bagParent = parentOfInputBag;
         var replacedFileIds = fileIdToBagLocationMap.keySet();
         var mappedFileIds = new HashSet<>(fileIdToExternalLocationMap.keySet().stream()
             // when reading the csv, the values are prefixed with the avDir, so we can't use startsWith,
@@ -84,9 +86,28 @@ public class AVReplacer {
 
         // Log the differences
         if (!onlyInMapping.isEmpty())
-            log.error("Elements in fileIdsInMapping but not in replacedFileIds: {}", onlyInMapping);
+            log.error("Elements in fileIdsInMapping but not in replacedFileIds: {} {}", bagParent, onlyInMapping);
         if (!onlyInReplaced.isEmpty())
-            log.error("Elements in replacedFileIds but not in fileIdsInMapping: {}", onlyInReplaced);
+            log.error("Elements in replacedFileIds but not in fileIdsInMapping: {} {}", bagParent, onlyInReplaced);
+        try {
+            if (!onlyInReplaced.isEmpty() || !onlyInMapping.isEmpty())
+                throw new IllegalStateException("Mapping and replaced files do not match");
+
+            mappedFileIds.forEach(id -> {
+                var path = fileIdToExternalLocationMap.get(id);
+                if (!path.toFile().exists()) {
+                    var msg = "File %s not found: %s".formatted(id, path);
+                    log.error(msg);
+                    throw new IllegalStateException(msg);
+                }
+            });
+        }
+        catch (IllegalStateException e) {
+            // TODO call constructor before creating copy of the bag
+            FileUtils.deleteDirectory(bagDir.toFile());
+            throw e;
+        }
+
     }
 
     private void replaceFile(String key) {

@@ -44,15 +44,14 @@ public class Converter {
         var filesXml = readXmlFile(inputDir.resolve("metadata/files.xml"));
 
         FileUtils.copyDirectory(inputDir.toFile(), revision1.toFile());
-        new AVReplacer(revision1, mapping, avDir, filesXml).replaceAVFiles();
+        new AVReplacer(revision1, mapping, avDir, filesXml, inputDir.getParent()).replaceAVFiles();
         ManifestsUpdater.updateAllPayloads(revision1);
 
         FileUtils.copyDirectory(revision1.toFile(), revision2.toFile());
         var bag2 = new BagVersion2(revision2);
         bag2.addVersionOf(revision1BagId);
         ManifestsUpdater.removePayloads(revision2, bag2.removeNoneNone(filesXml));
-
-//        FileUtils.copyDirectory(revision2.toFile(), revision3.toFile());
+        //        FileUtils.copyDirectory(revision2.toFile(), revision3.toFile());
         // TODO reuse addVersionOf
         // TODO add springfield files for non playable (.mka .mk4 >5GB)
     }
