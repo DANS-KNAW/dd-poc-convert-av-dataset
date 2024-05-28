@@ -1,0 +1,5 @@
+EASY-User-Account: fdemant
+Created: 2024-05-16T08:49:32.753+02:00
+Payload-Oxum: 1002640.6
+Bagging-Date: 2024-05-16
+Bag-Size: 979.1 KB

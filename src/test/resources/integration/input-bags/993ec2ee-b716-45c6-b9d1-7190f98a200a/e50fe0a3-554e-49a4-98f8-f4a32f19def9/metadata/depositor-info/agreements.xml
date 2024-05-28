@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<agreements xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/agreements/ https://easy.dans.knaw.nl/schemas/bag/metadata/agreements/2019/09/agreements.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/agreements/">
+        <depositAgreement>
+          <signerId easy-account="LGSmirjam" email="mirjam@circussinistra.nl">M.C.C. Huffener</signerId>
+          <dcterms:dateAccepted></dcterms:dateAccepted>
+          <depositAgreementAccepted>false</depositAgreementAccepted>
+        </depositAgreement>
+        <personalDataStatement>
+          <notAvailable> </notAvailable>
+        </personalDataStatement>
+      </agreements>

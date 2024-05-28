@@ -1,0 +1,5 @@
+EASY-User-Account: LGSmirjam
+Created: 2024-05-16T08:49:38.552+02:00
+Payload-Oxum: 375445.6
+Bagging-Date: 2024-05-16
+Bag-Size: 366.6 KB

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<files xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:afm="http://easy.dans.knaw.nl/schemas/bag/metadata/afm/" xmlns:dct="http://purl.org/dc/terms/">
+    <file filepath="data/NH173_1.pdf">
+        
+        <dct:identifier>easy-file:7728888</dct:identifier>
+        <dct:title>NH173_1.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.5MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/89e54b08-5f1f-452c-a551-0d35f75a3939/data/NH173_1.pdf</dct:source>
+        
+        
+      </file><file filepath="data/NH173.cmdi">
+        
+        <dct:identifier>easy-file:7728887</dct:identifier>
+        <dct:title>NH173.cmdi</dct:title>
+        <dct:format>application/xml</dct:format>
+        <dct:extent>0.0MB</dct:extent>
+        
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/NH173_2.pdf">
+        
+        <dct:identifier>easy-file:7728889</dct:identifier>
+        <dct:title>NH173_2.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.3MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/89e54b08-5f1f-452c-a551-0d35f75a3939/data/NH173_2.pdf</dct:source>
+        
+        
+      </file><file filepath="data/NH173.mkv">
+        
+        <dct:identifier>easy-file:7728890</dct:identifier>
+        <dct:title>NH173.mkv</dct:title>
+        <dct:format>video/x-matroska</dct:format>
+        <dct:extent>1119.2MB</dct:extent>
+        
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/89e54b08-5f1f-452c-a551-0d35f75a3939/data/NH173.mkv</dct:source>
+        
+        
+      </file>
+    </files>

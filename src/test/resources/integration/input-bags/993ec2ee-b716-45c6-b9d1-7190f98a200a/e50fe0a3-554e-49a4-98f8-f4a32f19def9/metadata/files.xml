@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<files xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:afm="http://easy.dans.knaw.nl/schemas/bag/metadata/afm/" xmlns:dct="http://purl.org/dc/terms/">
+    <file filepath="data/JKKV_JBohnen_IV-verklaring_schenkingsovereenkomst_NIOD.pdf">
+        
+        <dct:identifier>easy-file:8322138</dct:identifier>
+        <dct:title>JKKV_JBohnen_IV-verklaring_schenkingsovereenkomst_NIOD.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.6MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/993ec2ee-b716-45c6-b9d1-7190f98a200a/data/JKKV_JBohnen_IV%2Dverklaring_schenkingsovereenkomst_NIOD%2Epdf</dct:source>
+        
+        
+      </file><file filepath="data/emailcorresp_DANS_JKKV_toelichting_IV-verklaring.pdf">
+        
+        <dct:identifier>easy-file:8322136</dct:identifier>
+        <dct:title>emailcorresp_DANS_JKKV_toelichting_IV-verklaring.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.1MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/993ec2ee-b716-45c6-b9d1-7190f98a200a/data/emailcorresp_DANS_JKKV_toelichting_IV%2Dverklaring%2Epdf</dct:source>
+        
+        
+      </file><file filepath="data/Agreement Jules Schelvis.jpeg">
+        
+        <dct:identifier>easy-file:8322137</dct:identifier>
+        <dct:title>Agreement Jules Schelvis.jpeg</dct:title>
+        <dct:format>image/jpeg</dct:format>
+        <dct:extent>0.7MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/993ec2ee-b716-45c6-b9d1-7190f98a200a/data/Agreement%20Jules%20Schelvis%2Ejpeg</dct:source>
+        
+        
+      </file><file filepath="data/JKKV_2007_Eindpunt_Sobibor_SCHELVIS.mp4">
+        
+        <dct:identifier>easy-file:8322141</dct:identifier>
+        <dct:title>JKKV_2007_Eindpunt_Sobibor_SCHELVIS.mp4</dct:title>
+        <dct:format>video/mp4</dct:format>
+        <dct:extent>41.6MB</dct:extent>
+        
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/993ec2ee-b716-45c6-b9d1-7190f98a200a/data/JKKV_2007_Eindpunt_Sobibor_SCHELVIS%2Emp4</dct:source>
+        
+        
+      </file><file filepath="data/JKKV_2007_Eindpunt_Sobibor_SCHELVIS_samenvatting.pdf">
+        
+        <dct:identifier>easy-file:8322139</dct:identifier>
+        <dct:title>JKKV_2007_Eindpunt_Sobibor_SCHELVIS_samenvatting.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.3MB</dct:extent>
+        
+        <accessibleToRights>KNOWN</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/JKKV_2007_Eindpunt_Sobibor_SCHELVIS_samenvatting.docx">
+        
+        <dct:identifier>easy-file:8322140</dct:identifier>
+        <dct:title>JKKV_2007_Eindpunt_Sobibor_SCHELVIS_samenvatting.docx</dct:title>
+        <dct:format>application/vnd.openxmlformats-officedocument.wordprocessingml.document</dct:format>
+        <dct:extent>0.0MB</dct:extent>
+        
+        <accessibleToRights>KNOWN</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file>
+    </files>

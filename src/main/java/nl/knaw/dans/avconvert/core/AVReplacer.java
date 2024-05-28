@@ -36,7 +36,9 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
@@ -48,19 +50,64 @@ public class AVReplacer {
     private final Path avDir;
     private final Map<String, Path> fileIdToExternalLocationMap;
     private final Map<String, Path> fileIdToBagLocationMap;
+    private final String parentOfInputBag;
 
-    public AVReplacer(Path bagDir, Path csv, Path avDir, Document filesXml)
+    public AVReplacer(Path bagDir, Path csv, Path avDir, Document filesXml, Path parentOfInputBag)
         throws IOException {
 
         this.bagDir = bagDir;
         this.avDir = avDir;
         fileIdToExternalLocationMap = readCSV(csv);
         fileIdToBagLocationMap = getIdentifierToDestMap(filesXml);
+        this.parentOfInputBag = parentOfInputBag.getFileName().toString();
+        crossCheckReplacedMapped();
     }
 
     @SneakyThrows
     public void replaceAVFiles() {
         fileIdToBagLocationMap.keySet().forEach(this::replaceFile);
+    }
+
+    private void crossCheckReplacedMapped() throws IOException {
+        var bagParent = parentOfInputBag;
+        var replacedFileIds = fileIdToBagLocationMap.keySet();
+        var mappedFileIds = new HashSet<>(fileIdToExternalLocationMap.keySet().stream()
+            // when reading the csv, the values are prefixed with the avDir, so we can't use startsWith,
+            // the bagParent is supposed to be a UUID hence unique
+            .filter(kv -> fileIdToExternalLocationMap.get(kv).toString().contains(bagParent))
+            .toList()
+        );
+
+        // Create sets for the differences
+        Set<String> onlyInMapping = new HashSet<>(mappedFileIds);
+        onlyInMapping.removeAll(replacedFileIds);
+        Set<String> onlyInReplaced = new HashSet<>(replacedFileIds);
+        onlyInReplaced.removeAll(mappedFileIds);
+
+        // Log the differences
+        if (!onlyInMapping.isEmpty())
+            log.error("Elements in fileIdsInMapping but not in replacedFileIds: {} {}", bagParent, onlyInMapping);
+        if (!onlyInReplaced.isEmpty())
+            log.error("Elements in replacedFileIds but not in fileIdsInMapping: {} {}", bagParent, onlyInReplaced);
+        try {
+            if (!onlyInReplaced.isEmpty() || !onlyInMapping.isEmpty())
+                throw new IllegalStateException("Mapping and replaced files do not match");
+
+            mappedFileIds.forEach(id -> {
+                var path = fileIdToExternalLocationMap.get(id);
+                if (!path.toFile().exists()) {
+                    var msg = "File %s not found: %s".formatted(id, path);
+                    log.error(msg);
+                    throw new IllegalStateException(msg);
+                }
+            });
+        }
+        catch (IllegalStateException e) {
+            // TODO call constructor before creating copy of the bag
+            FileUtils.deleteDirectory(bagDir.toFile());
+            throw e;
+        }
+
     }
 
     private void replaceFile(String key) {

@@ -28,16 +28,19 @@ import static java.nio.file.Files.createDirectories;
 import static nl.knaw.dans.avconvert.TestUtils.captureLog;
 import static nl.knaw.dans.avconvert.TestUtils.captureStdout;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.h2.store.fs.FileUtils.createFile;
 
 public class AVReplacerTest extends AbstractTestWithTestDir {
 
-    private final Path bagDir = testDir.resolve("bag");
+    private final Path bagDir = testDir.resolve("bagParent").resolve("bag");
     private final Path filesXmlPath = bagDir.resolve("metadata/files.xml");
-    private final Path csvFile = testDir.resolve("mapping.csv");
+    private final Path csvFile = testDir.resolve("integration/mapping.csv");
+
+    // happy case is covered by integration test
 
     @Test
-    public void should_replace() throws Exception {
+    public void should_report_invalid_mapping() throws Exception {
         createMissingParentDirectories(csvFile.toFile());
         createMissingParentDirectories(filesXmlPath.toFile());
         createDirectories(bagDir.resolve("data"));
@@ -47,13 +50,12 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             BagIt-Version: 1.0
             Tag-File-Character-Encoding: UTF-8
             """);
-        Files.createFile(bagDir.resolve("tagmanifest-sha1.txt"));
-        Files.createFile(bagDir.resolve("manifest-sha1.txt"));
         Files.writeString(csvFile, """
             easy_file_id,path_in_AV_dir,path_in_springfield_dir
             file1,marbles.mp4,
-            file2,,swirls.mp4,causes logging
-            file9,,causes logging"""
+            file2,,swirls.mp4,causes logging,
+            file9,,causes logging
+            fileA,%s/bag/data/file""".formatted(bagDir.getParent())
         );
         Files.writeString(filesXmlPath, """
             <files
@@ -81,27 +83,24 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         );
         var filesXml = Converter.readXmlFile(bagDir.resolve("metadata/files.xml"));
 
-        assertThat(bagDir.resolve("data/file1.mp4")).hasSize(0L);
-        assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
-        assertThat(bagDir.resolve("manifest-sha1.txt")).hasSize(0L);
-        assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasSize(0L);
         var logger = captureLog(Level.INFO, AVReplacer.class.getName());
         captureStdout(); // ignore the logging on stdout
 
-        new AVReplacer(
+        assertThatThrownBy(() -> new AVReplacer(
             bagDir,
             csvFile,
             Path.of("src/test/resources/avDir"),
-            filesXml
-        ).replaceAVFiles();
-
-        assertThat(bagDir.resolve("data/file1.mp4")).hasSize(4918979L);
-        assertThat(bagDir.resolve("data/file2.mp4")).hasSize(0L);
+            filesXml,
+            bagDir.getParent()
+        ).replaceAVFiles())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("Mapping and replaced files do not match");
 
         var messages = logger.list.stream().map(ILoggingEvent::getFormattedMessage).toList();
-        assertThat(messages.get(0)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , swirls.mp4, causes logging]]");
+        assertThat(messages.get(0)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=2, values=[file2, , swirls.mp4, causes logging, ]]");
         assertThat(messages.get(1)).isEqualTo("No AV path found for: CSVRecord [comment='null', recordNumber=3, values=[file9, , causes logging]]");
-        assertThat(messages.get(4)).isEqualTo("No external location found for: file2");
+        assertThat(messages.get(4)).isEqualTo("Elements in fileIdsInMapping but not in replacedFileIds: bagParent [fileA]");
+        assertThat(messages.get(5)).isEqualTo("Elements in replacedFileIds but not in fileIdsInMapping: bagParent [file2, file1]");
         assertThat(messages.get(2)).isEqualTo("""
             No <dct:identifier> found in: <?xml version="1.0" encoding="UTF-8"?><file filepath="data/file3.mp4" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/">
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
@@ -112,19 +111,6 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
                 <dct:source xmlns:dct="http://purl.org/dc/terms/">generates logging</dct:source>
               </file>"""
         );
-        assertThat(messages).hasSize(5);
-
-        // TODO: move this part of the test together with the assertions
-        new ManifestsUpdater(bagDir).updateAll();
-        assertThat(bagDir.resolve("manifest-sha1.txt")).hasContent("""
-            da39a3ee5e6b4b0d3255bfef95601890afd80709  data/file2.mp4
-            ab8e3b0d1cb0b5f057703257e87b7903b24d8890  data/file1.mp4
-            """);
-        assertThat(bagDir.resolve("tagmanifest-sha1.txt")).hasContent("""
-            8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
-            da39a3ee5e6b4b0d3255bfef95601890afd80709  tagmanifest-sha1.txt
-            d9aeb25aeaf4bc50d4355cfa1d766635d2604c04  metadata/files.xml
-            0412a92d67d0c42d15fb3a31297f0db477d1fe93  manifest-sha1.txt
-            """);
+        assertThat(messages).hasSize(6);
     }
 }

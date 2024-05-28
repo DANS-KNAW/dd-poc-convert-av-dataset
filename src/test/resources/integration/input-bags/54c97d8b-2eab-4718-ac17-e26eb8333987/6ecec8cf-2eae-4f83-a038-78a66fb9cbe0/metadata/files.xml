@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<files xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ http://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:afm="http://easy.dans.knaw.nl/schemas/bag/metadata/afm/" xmlns:dct="http://purl.org/dc/terms/">
+    <file filepath="data/Gonggrijp_20200305_transcript©MarieDucimetière.pdf">
+        
+        <dct:identifier>easy-file:11705243</dct:identifier>
+        <dct:title>Gonggrijp_20200305_transcript©MarieDucimetière.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.6MB</dct:extent>
+        
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+        <visibleToRights>ANONYMOUS</visibleToRights>
+        
+        
+        
+      </file><file filepath="data/Gonggrijp_20200305_part2_section3.mkv">
+        
+        <dct:identifier>easy-file:11674929</dct:identifier>
+        <dct:title>Gonggrijp_20200305_part2_section3.mkv</dct:title>
+        <dct:format>video/x-matroska</dct:format>
+        <dct:extent>2036.7MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/54c97d8b-2eab-4718-ac17-e26eb8333987/data/Gonggrijp_20200305_part2_section3%2Emkv</dct:source>
+        
+        
+      </file><file filepath="data/Gonggrijp_20200305_consent.pdf">
+        
+        <dct:identifier>easy-file:11674930</dct:identifier>
+        <dct:title>Gonggrijp_20200305_consent.pdf</dct:title>
+        <dct:format>application/pdf</dct:format>
+        <dct:extent>0.3MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/54c97d8b-2eab-4718-ac17-e26eb8333987/data/Gonggrijp_20200305_consent%2Epdf</dct:source>
+        
+        
+      </file><file filepath="data/Gonggrijp_20200305_part2_section1.mkv">
+        
+        <dct:identifier>easy-file:11674931</dct:identifier>
+        <dct:title>Gonggrijp_20200305_part2_section1.mkv</dct:title>
+        <dct:format>video/x-matroska</dct:format>
+        <dct:extent>535.5MB</dct:extent>
+        
+        <accessibleToRights>NONE</accessibleToRights>
+        <visibleToRights>NONE</visibleToRights>
+        <dct:source>http://datavault.dans.knaw.nl/54c97d8b-2eab-4718-ac17-e26eb8333987/data/Gonggrijp_20200305_part2_section1%2Emkv</dct:source>
+        
+        
+      </file>
+    </files>

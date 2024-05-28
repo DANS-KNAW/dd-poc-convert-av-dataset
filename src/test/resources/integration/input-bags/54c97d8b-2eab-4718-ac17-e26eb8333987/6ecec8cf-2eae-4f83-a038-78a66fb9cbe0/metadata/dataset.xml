@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ddm:DDM xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/md/ddm/ https://easy.dans.knaw.nl/schemas/md/ddm/ddm.xsd" xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:ddm="http://easy.dans.knaw.nl/schemas/md/ddm/" xmlns:abr="http://www.den.nl/standaard/166/Archeologisch-Basisregister/" xmlns:gml="http://www.opengis.net/gml" xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/" xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/" xmlns:dct="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/">
+     <ddm:profile>
+       <dc:title>Interview Eva Gonggrijp on Grenzeloze Inhoud</dc:title>
+       <dct:description>Michael Gibbs took part in the project &quot;Traveling exhibition&quot; in 1983. He decided to perforate the suitcase designed by John den Besten with bullets. Unfortunately, the artist passed away in 2007. This interview is with Eva Gonggrijp, his widow. She describes in more detail the philosophy behind Michael Gibbs' art.</dct:description>
+       
+       
+       <dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>BA</dcx-dai:titles>
+        <dcx-dai:initials>M.D.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Ducimetière</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>Researcher</dcx-dai:role>
+        <dcx-dai:organization>
+        <dcx-dai:name>University of Amsterdam</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:creatorDetails><dcx-dai:creatorDetails><dcx-dai:author>
+        <dcx-dai:titles>BA</dcx-dai:titles>
+        <dcx-dai:initials>A.S.</dcx-dai:initials>
+        
+        <dcx-dai:surname>Soulioti</dcx-dai:surname>
+        
+        
+        
+        <dcx-dai:role>Researcher</dcx-dai:role>
+        <dcx-dai:organization>
+        <dcx-dai:name>University of Amsterdam</dcx-dai:name>
+        
+      </dcx-dai:organization>
+      </dcx-dai:author> </dcx-dai:creatorDetails>
+       <ddm:created>2020-03-05</ddm:created>
+       <ddm:available>2021-08-07</ddm:available>
+       <ddm:audience>D30000</ddm:audience><ddm:audience>D35000</ddm:audience>
+       <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
+     </ddm:profile>
+     <ddm:dcmiMetadata>
+       <dct:identifier xsi:type="id-type:URN">urn:nbn:nl:ui:13-8w-asc6</dct:identifier><dct:identifier xsi:type="id-type:DOI">10.17026/dans-zb9-cufs</dct:identifier><dct:identifier xsi:type="id-type:EASY2">easy-dataset:218800</dct:identifier>
+       
+       
+       
+       
+       
+       <ddm:relation scheme="STREAMING_SURROGATE_RELATION">
+        /domain/dans/user/Sanneke/collection/Grenzeloze/presentation/easy-dataset:218800
+      </ddm:relation><dct:references>Beer, Evelyne / Nederlandse Kunststichting. Grenzeloze inhoud: verhalen uit een bagagedep�t. Catalogus reizende tentoonstelling Nederlandse Kunststichting. Nuth: Rosbeek, 1983</dct:references><dct:isReferencedBy>ducimeti�remarie_Treatment Report Gibbs</dct:isReferencedBy>
+       <ddm:relation scheme="id-type:DOI" href="https://doi.org/10.17026/dans-zja-88ta">Thematische collectie: Interviews in Conservation Research</ddm:relation>
+       
+       
+       <dct:rightsHolder>University of Amsterdam</dct:rightsHolder>
+       <dct:publisher>University of Amsterdam</dct:publisher>
+       
+       <dct:type xsi:type="dct:DCMIType">Dataset</dct:type>
+       <dct:format>application/pdf</dct:format><dct:format>video/mpeg</dct:format>
+       
+       
+       <dct:subject>Conservering en Restauratie van Cultureel Erfgoed</dct:subject><dct:subject>Conservation and Restoration of Cultural Heritage</dct:subject><dct:subject>Grenzeloze Inhoud</dct:subject><dct:subject>Verhalen uit een Bagagedepot</dct:subject><dct:subject>Mondelinge Geschiedenis</dct:subject><dct:subject>Oral History</dct:subject><dct:subject>Kunstwerk</dct:subject><dct:subject>Artwork</dct:subject><dct:subject>Conservering</dct:subject><dct:subject>Conservation</dct:subject><dct:subject>Restauratie</dct:subject><dct:subject>Restoration</dct:subject><dct:subject>Materialen en Technieken</dct:subject><dct:subject>Materials and Techniques</dct:subject><dct:subject>Maakproces</dct:subject><dct:subject>Making Process</dct:subject><dct:subject>Rijksdienst Beeldende Kunst (RBK)</dct:subject><dct:subject>Cultural Heritage Agency of the Netherlands</dct:subject><dct:subject>Rijksdienst voor het Cultureel Erfgoed (RCE)</dct:subject><dct:subject>Rijkscollectie</dct:subject><dct:subject>State Collection</dct:subject><dct:subject>De Reis</dct:subject><dct:subject>John den Besten</dct:subject><dct:subject>Kunstenaarsinterview</dct:subject><dct:subject>Artist Interview</dct:subject><dct:subject>Hedendaagse Kunst</dct:subject><dct:subject>Contemporary Art</dct:subject><dct:subject>BK-informatie</dct:subject><dct:subject>Nederlandse Kunststichting</dct:subject><dct:subject>Koffer</dct:subject><dct:subject>Suitcase</dct:subject><dct:subject>Plastics</dct:subject><dct:subject>Reizende tentoonstelling</dct:subject><dct:subject>Traveling exhibition</dct:subject><dct:subject>Universiteit van Amsterdam</dct:subject><dct:subject>University of Amsterdam</dct:subject><dct:subject>Poetry</dct:subject><dct:subject>Michael Gibbs</dct:subject><dct:subject>Words</dct:subject><dct:subject>Eva Gonggrijp</dct:subject><dct:subject>William Burroughts</dct:subject><dct:subject>John Klinkenberg</dct:subject>
+       
+       
+       
+       
+       
+       <dct:license xsi:type="dct:URI">http://creativecommons.org/publicdomain/zero/1.0</dct:license>
+       <dct:language>eng</dct:language><dct:language>nld</dct:language>
+       
+     </ddm:dcmiMetadata>
+   </ddm:DDM>

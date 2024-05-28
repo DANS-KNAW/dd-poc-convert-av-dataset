@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<emd:easymetadata emd:version="0.1" xmlns:emd="http://easy.dans.knaw.nl/easy/easymetadata/" xmlns:eas="http://easy.dans.knaw.nl/easy/easymetadata/eas/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <emd:title>
+    <dc:title>Institutions for Collective Action: Kroniek van een Bazenbondje, interview met Peter Essenberg</dc:title>
+  </emd:title>
+  <emd:creator>
+    <eas:creator>
+      <eas:title>MA</eas:title>
+      <eas:initials>E. J.</eas:initials>
+      <eas:prefix>de</eas:prefix>
+      <eas:surname>Jager</eas:surname>
+      <eas:organization>Stichting Reis van de Razzia</eas:organization>
+      <eas:entityId eas:scheme="DAI"/>
+      <eas:role eas:scheme="DATACITE">ProjectLeader</eas:role>
+    </eas:creator>
+  </emd:creator>
+  <emd:subject>
+    <dc:subject>oral history</dc:subject>
+    <dc:subject>geschiedenis</dc:subject>
+    <dc:subject>cultureel erfgoed</dc:subject>
+    <dc:subject>coöperatieve verenigingen</dc:subject>
+    <dc:subject>commons</dc:subject>
+    <dc:subject>broodfonds</dc:subject>
+    <dc:subject>arbeidsongeschiktheidsverzekering</dc:subject>
+    <dc:subject>zelfstandig ondernemen</dc:subject>
+    <dc:subject>zzp-er</dc:subject>
+  </emd:subject>
+  <emd:description>
+    <dc:description>Peter Essenberg is zeventig jaar oud en is zijn bedrijf begonnen op z’n vijftigste. Dat lijkt hem goed af te gaan: hij heeft een holding met diverse werkmaatschappijen die vooral handel drijven met het Midden-Oosten. Die handel is een eclectische mix van schoensmeer tot boten tot cosmetica tot
+energiecentrales.
+In het interview stipt hij aan dat hij nog altijd lid is van het FNV. Een overblijfsel van zijn tijd bij Werkspoor. Hij lijkt meer affiniteit met de wereld van de werknemers te hebben dan met die van de bazen. Al heeft hij geen ziektekostenverzekering meer. Dat is opgehouden toen hij stopte bij Werkspoor.
+Wel is hij lid van het Bazenbondje. Hij ziet dat niet als een ziektekostenverzekering. Mocht die weer nieuw leven worden ingeblazen, dan kan dat via een aparte vereniging die gelieerd is aan het Bazenbondje om op die manier iets van de doelstellingen over te nemen. De reden daarvan is dat ‘Ons Belang’ niet in liquiditeitsproblemen moet komen. Daarom houdt hij graag Jan de Ruyter scherp met kritische vragen en opmerkingen tijdens de vergadering. Hoewel hij vindt dat Jan de Ruyter het goed doet als penningmeester, zal hij dat nooit tegen hem zeggen. Jan en hij kennen elkaar al van kinds af aan. Ze hebben samen op school gezeten. Zelf zit Peter in het bestuur van ‘Gedenk te sterven’.
+Aan het einde van het interview laat hij twee onderdelen van zijn holding zien. Foto’s van plezierjachten en een filmpje van een energiecentrale worden getoond.</dc:description>
+  </emd:description>
+  <emd:publisher/>
+  <emd:contributor>
+    <eas:contributor>
+      <eas:title>MA</eas:title>
+      <eas:initials>J.</eas:initials>
+      <eas:surname>Vinke</eas:surname>
+      <eas:organization>Universiteit van Utrecht</eas:organization>
+      <eas:entityId eas:scheme="DAI"/>
+      <eas:role eas:scheme="DATACITE">ProjectMember</eas:role>
+    </eas:contributor>
+    <eas:contributor>
+      <eas:title>MA</eas:title>
+      <eas:initials>T.</eas:initials>
+      <eas:surname>Broere</eas:surname>
+      <eas:organization>Stichting Reis van de Razzia</eas:organization>
+      <eas:entityId eas:scheme="DAI"/>
+      <eas:role eas:scheme="DATACITE">ProjectMember</eas:role>
+    </eas:contributor>
+    <eas:contributor>
+      <eas:initials>E.</eas:initials>
+      <eas:surname>Hafkamp</eas:surname>
+      <eas:organization>Stichting Reis van de Razzia</eas:organization>
+      <eas:entityId eas:scheme="DAI"/>
+      <eas:role eas:scheme="DATACITE">ProjectMember</eas:role>
+    </eas:contributor>
+    <eas:contributor>
+      <eas:organization>Funding agency: Prins Bernard Cultuurfonds Noord-Holland</eas:organization>
+      <eas:entityId eas:scheme="DAI"/>
+      <eas:role eas:scheme="DATACITE">ProjectMember</eas:role>
+    </eas:contributor>
+  </emd:contributor>
+  <emd:date>
+    <eas:created eas:scheme="W3CDTF" eas:format="DAY">2016-04-01T00:00:00.000+02:00</eas:created>
+    <eas:available eas:scheme="W3CDTF" eas:format="DAY">2018-10-22T00:00:00.000+02:00</eas:available>
+  </emd:date>
+  <emd:type>
+    <dc:type eas:schemeId="common.dc.type" eas:scheme="DCMI">Dataset</dc:type>
+  </emd:type>
+  <emd:format>
+    <dc:format eas:schemeId="common.dc.format" eas:scheme="IMT">video/quicktime</dc:format>
+    <dc:format eas:schemeId="common.dc.format" eas:scheme="IMT">application/pdf</dc:format>
+    <dc:format eas:schemeId="common.dc.format" eas:scheme="IMT">image/jpeg</dc:format>
+    <dc:format eas:schemeId="common.dc.format" eas:scheme="IMT">text/plain</dc:format>
+  </emd:format>
+  <emd:identifier>
+    <dc:identifier eas:scheme="PID" eas:identification-system="http://www.persistent-identifier.nl">urn:nbn:nl:ui:13-1q-4zfw</dc:identifier>
+    <dc:identifier eas:scheme="DOI" eas:identification-system="https://doi.org">10.17026/dans-2an-vudm</dc:identifier>
+    <dc:identifier eas:scheme="DMO_ID">easy-dataset:112582</dc:identifier>
+  </emd:identifier>
+  <emd:source/>
+  <emd:language>
+    <dc:language eas:schemeId="common.dc.language" eas:scheme="ISO 639">dut/nld</dc:language>
+  </emd:language>
+  <emd:relation>
+    <dc:relation eas:scheme="STREAMING_SURROGATE_RELATION">/domain/dans/user/bazenbondje/collection/firstcollection/presentation/easy-dataset:112582</dc:relation>
+    <eas:relation eas:emphasis="true">
+      <eas:subject-title>Reis door het Achterland</eas:subject-title>
+      <eas:subject-link>http://www.reisdoorhetachterland.nl</eas:subject-link>
+    </eas:relation>
+    <eas:relation>
+      <eas:subject-title>Institutions for Collectie Action</eas:subject-title>
+      <eas:subject-link>http://www.collective-action.info</eas:subject-link>
+    </eas:relation>
+    <eas:relation>
+      <eas:subject-title>The International Association for the Study of the Commons (IASC)</eas:subject-title>
+      <eas:subject-link>http://www.iasc-commons.org</eas:subject-link>
+    </eas:relation>
+    <eas:isPartOf eas:emphasis="true">
+      <eas:subject-title>Thematische collectie: Kroniek van een Bazenbondje </eas:subject-title>
+      <eas:subject-link>https://doi.org/10.17026/dans-z9h-nrev</eas:subject-link>
+    </eas:isPartOf>
+  </emd:relation>
+  <emd:coverage>
+    <dct:spatial>Amsterdam</dct:spatial>
+    <dct:spatial>Nieuwendam</dct:spatial>
+    <dct:temporal>1905-2015</dct:temporal>
+  </emd:coverage>
+  <emd:rights>
+    <dct:accessRights eas:schemeId="common.dcterms.accessrights">OPEN_ACCESS</dct:accessRights>
+    <dct:rightsHolder>Stichting Reis van de Razzia</dct:rightsHolder>
+  </emd:rights>
+  <emd:audience>
+    <dct:audience eas:schemeId="custom.disciplines">easy-discipline:11</dct:audience>
+    <dct:audience eas:schemeId="custom.disciplines">easy-discipline:51</dct:audience>
+  </emd:audience>
+  <emd:other>
+    <eas:application-specific>
+      <eas:metadataformat>ANY_DISCIPLINE</eas:metadataformat>
+      <eas:pakbon-status>NOT_IMPORTED</eas:pakbon-status>
+      <eas:archive eas:location="DATAVAULT"/>
+    </eas:application-specific>
+    <eas:etc/>
+  </emd:other>
+</emd:easymetadata>
