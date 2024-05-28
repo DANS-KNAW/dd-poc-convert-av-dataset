@@ -1,4 +1,4 @@
-d968f4c77f3548acae2ced8b5ad66b200c3b751e  manifest-sha1.txt
+1c1df91b87fe8afb0b760f70aba7c8345af79163  manifest-sha1.txt
 40d9a37fe7b32e529084eb4a1001028e6c35062b  bag-info.txt
 1223becc80df289c241c81f83af69963b33c78e5  metadata/depositor-info/depositor-agreement.pdf
 6546660f4b650d93bdaf0bb2ab7d789614a97ead  metadata/depositor-info/agreements.xml
