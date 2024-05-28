@@ -17,18 +17,29 @@ package nl.knaw.dans.avconvert.core;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.UUID;
 
 import static java.nio.file.Files.createDirectories;
+import static nl.knaw.dans.avconvert.core.Springfield.addSpringfieldFiles;
+import static nl.knaw.dans.avconvert.core.Springfield.findSpringfieldFiles;
+import static org.apache.commons.io.FileUtils.copyDirectory;
 
 @Slf4j
 public class Converter {
@@ -37,26 +48,47 @@ public class Converter {
     public void convert(Path inputDir, Path mapping, Path avDir, Path springfieldDir, Path outputDir) {
         log.debug("Converting AV dataset from {} to {}", inputDir, outputDir);
         createDirectories(outputDir);
-        var revision1BagId = inputDir.toFile().getName();
-        var revision1 = outputDir.resolve(revision1BagId);
+        var revision1 = outputDir.resolve(inputDir.getFileName());
         var revision2 = outputDir.resolve(UUID.randomUUID().toString());
         var revision3 = outputDir.resolve(UUID.randomUUID().toString());
-        var filesXml = readXmlFile(inputDir.resolve("metadata/files.xml"));
+        var filesXml = readFilesXml(inputDir.resolve("metadata/files.xml"));
 
-        FileUtils.copyDirectory(inputDir.toFile(), revision1.toFile());
+        copyDirectory(inputDir.toFile(), revision1.toFile());
         new AVReplacer(revision1, mapping, avDir, filesXml, inputDir.getParent()).replaceAVFiles();
         ManifestsUpdater.updateAllPayloads(revision1);
 
-        FileUtils.copyDirectory(revision1.toFile(), revision2.toFile());
+        copyDirectory(revision1.toFile(), revision2.toFile());
         var bag2 = new BagVersion2(revision2);
-        bag2.addVersionOf(revision1BagId);
-        ManifestsUpdater.removePayloads(revision2, bag2.removeNoneNone(filesXml));
-        //        FileUtils.copyDirectory(revision2.toFile(), revision3.toFile());
-        // TODO reuse addVersionOf
-        // TODO add springfield files for non playable (.mka .mk4 >5GB)
+        var removedFiles = bag2.removeNoneNone(filesXml);
+        writeFilesXml(revision2, filesXml);
+        addIsVersionOf(revision2, revision1);
+        ManifestsUpdater.removePayloads(revision2, removedFiles);
+
+        var fileIdToPathInSpringfield = findSpringfieldFiles(mapping, springfieldDir, inputDir.getParent().toFile().getName());
+        if (!fileIdToPathInSpringfield.isEmpty()) {
+            copyDirectory(revision2.toFile(), revision3.toFile());
+            addSpringfieldFiles(revision3, fileIdToPathInSpringfield, filesXml);
+            writeFilesXml(revision3, filesXml);
+            replaceIsVersionOf(revision3, revision2);
+            ManifestsUpdater.updateAllPayloads(revision3);
+        }
     }
 
-    public static Document readXmlFile(Path path) throws ParserConfigurationException, IOException, SAXException {
+    private static void addIsVersionOf(Path newBag, Path previousBag) throws IOException {
+        Files.writeString(newBag.resolve("bag-info.txt"),
+            "Is-Version-Of: urn:uuid:" + previousBag.getFileName() + System.lineSeparator(),
+            StandardOpenOption.APPEND
+        );
+    }
+
+    private static void replaceIsVersionOf(Path newBag, Path previousBag) throws IOException {
+        var bagInfo = newBag.resolve("bag-info.txt");
+        var lines = Files.readAllLines(bagInfo);
+        lines.set(lines.size() - 1, "Is-Version-Of: urn:uuid:" + previousBag.getFileName());
+        Files.write(bagInfo, lines);
+    }
+
+    public static Document readFilesXml(Path path) throws ParserConfigurationException, IOException, SAXException {
         var factory = DocumentBuilderFactory.newInstance();
         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
@@ -67,4 +99,9 @@ public class Converter {
             .parse(path.toFile());
     }
 
+    public static void writeFilesXml(Path bagDir, Document filesXml) throws IOException, TransformerException {
+        Writer writer = new FileWriter(bagDir.resolve("metadata").resolve("files.xml").toFile());
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.transform(new DOMSource(filesXml), new StreamResult(writer));
+    }
 }

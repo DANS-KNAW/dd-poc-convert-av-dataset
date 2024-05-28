@@ -15,7 +15,6 @@
  */
 package nl.knaw.dans.avconvert.core;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -63,7 +62,6 @@ public class AVReplacer {
         crossCheckReplacedMapped();
     }
 
-    @SneakyThrows
     public void replaceAVFiles() {
         fileIdToBagLocationMap.keySet().forEach(this::replaceFile);
     }
@@ -172,7 +170,7 @@ public class AVReplacer {
         return identifierToDestMap;
     }
 
-    private static String serializeNode(Node node) {
+    public static String serializeNode(Node node) {
         try {
             StringWriter sw = new StringWriter();
             Transformer t = TransformerFactory.newInstance().newTransformer();

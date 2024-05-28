@@ -15,22 +15,13 @@
  */
 package nl.knaw.dans.avconvert.core;
 
-import lombok.SneakyThrows;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +33,7 @@ public class BagVersion2 {
         this.bagDir = bagDir;
     }
 
-    @SneakyThrows
-    public List<Path> removeNoneNone(Document filesXml) {
+    public List<Path> removeNoneNone(Document filesXml) throws IOException {
 
         List<Path> filesWithNoneNone = new ArrayList<>();
         NodeList fileList = filesXml.getElementsByTagName("file");
@@ -61,9 +51,6 @@ public class BagVersion2 {
                 i--;
             }
         }
-        Writer writer = new FileWriter(bagDir.resolve("metadata").resolve("files.xml").toFile());
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.transform(new DOMSource(filesXml), new StreamResult(writer));
         return filesWithNoneNone;
     }
 
@@ -72,12 +59,5 @@ public class BagVersion2 {
         if (elements.getLength() == 0)
             return true;
         return "NONE".equals(elements.item(0).getTextContent());
-    }
-
-    public void addVersionOf(String previousVersion) throws IOException {
-        Files.writeString(bagDir.resolve("bag-info.txt"),
-            "Is-Version-Of: urn:uuid:" + previousVersion + System.lineSeparator(),
-            StandardOpenOption.APPEND
-        );
     }
 }

@@ -61,7 +61,7 @@ public class BagVersion2Test extends AbstractTestWithTestDir {
             </files>
             """
         );
-        var filesXml = Converter.readXmlFile(filesXmlPath);
+        var filesXml = Converter.readFilesXml(filesXmlPath);
         assertThat(new BagVersion2(bagDir).removeNoneNone(filesXml))
             .containsExactlyInAnyOrderElementsOf(Set.of(
                 Path.of("data/file1.mp4"),

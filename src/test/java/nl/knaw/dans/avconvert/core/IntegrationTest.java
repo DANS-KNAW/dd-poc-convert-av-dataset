@@ -68,24 +68,25 @@ public class IntegrationTest {
     @MethodSource("bagProvider")
     public void testGrandchild(Path inputBag) throws IOException {
         captureStdout(); // ignore the logging on stdout
+        var outputDir = testDir.resolve("converted-bags").resolve(inputBag.getParent().getFileName());
         new Converter().convert(
             inputBag,
             sources.resolve("mapping.csv"),
             sources.resolve("av-dir"),
             sources.resolve("springfield-dir"),
-            testDir.resolve("converted-bags")
+            outputDir
         );
 
         // all manifest-sha1.txt files should be unique
         var manifests = new ArrayList<>();
         manifests.add(readSorted(inputBag.resolve("manifest-sha1.txt")));
-        Files.walk(testDir.resolve("converted-bags"))
+        Files.walk(outputDir)
             .filter(path -> path.getFileName().toString().equals("manifest-sha1.txt"))
             .forEach(path -> manifests.add(readSorted(path)));
         assertThat(new HashSet<>(manifests))
             .containsExactlyInAnyOrderElementsOf(manifests);
 
-        // TODO validate bags manually
+        // TODO validate bags manually, follow instructions in src/test/resources/integration/validate.sh
     }
 
     private String readSorted(Path path) {

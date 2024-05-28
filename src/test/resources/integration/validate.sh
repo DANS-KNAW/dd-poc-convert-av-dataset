@@ -8,7 +8,7 @@
 
 output_dir=~/git/dans/dd-poc-convert-av-dataset/target/test/IntegrationTest/converted-bags
 input_dir=~/git/dans/dd-poc-convert-av-dataset/src/test/resources/integration/input-bags
-for file in $input_dir/*/* $output_dir/*; do
+for file in $input_dir/*/* $output_dir/*/*; do
     echo "$file"
     grep Version "$file"/bag-info.txt
     poetry run dans-bag-validate "$file"
