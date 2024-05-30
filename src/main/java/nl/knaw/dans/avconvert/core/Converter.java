@@ -58,8 +58,7 @@ public class Converter {
         ManifestsUpdater.updateAllPayloads(revision1);
 
         copyDirectory(revision1.toFile(), revision2.toFile());
-        var bag2 = new BagVersion2(revision2);
-        var removedFiles = bag2.removeNoneNone(filesXml);
+        var removedFiles = new BagVersion2(revision2).removeNoneNone(filesXml);
         writeFilesXml(revision2, filesXml);
         addIsVersionOf(revision2, revision1);
         ManifestsUpdater.removePayloads(revision2, removedFiles);
@@ -68,9 +67,13 @@ public class Converter {
         if (!fileIdToPathInSpringfield.isEmpty()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
             addSpringfieldFiles(revision3, fileIdToPathInSpringfield, filesXml);
-            writeFilesXml(revision3, filesXml);
-            replaceIsVersionOf(revision3, revision2);
-            ManifestsUpdater.updateAllPayloads(revision3);
+            if (revision3.toFile().exists()) {
+                // files to be replaced might have been none/none
+                // when nothing remains the bag is removed
+                writeFilesXml(revision3, filesXml);
+                replaceIsVersionOf(revision3, revision2);
+                ManifestsUpdater.updateAllPayloads(revision3);
+            }
         }
     }
 

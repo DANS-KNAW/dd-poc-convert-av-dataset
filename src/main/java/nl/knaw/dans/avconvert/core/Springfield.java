@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,13 +80,16 @@ public class Springfield {
             }
         }
         if (!matchingFiles.keySet().containsAll(ids)) {
-            log.error("Not all files found in files.xml: {} {}", ids, matchingFiles.keySet());
-            // TODO better move this check to findSpringfieldFiles then the directory is not created
-            deleteDirectory(bagDir);
-            throw new RuntimeException("Not all files found in files.xml");
+            log.error("Not all files found in files.xml (probably removed because of none/none): {} {}", ids, matchingFiles.keySet());
         }
 
-        fileIdToPathInSpringfield.keySet().forEach(id -> {
+        if (matchingFiles.keySet().isEmpty()) {
+            // TODO better move this check to findSpringfieldFiles then the directory is not created
+            deleteDirectory(bagDir);
+            return;
+        }
+
+        matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id); // TODO not found?
             var newElement = filesXml.createElement("file");
             var newFile = replaceExtension(
@@ -97,7 +101,8 @@ public class Springfield {
             newElement.appendChild(oldElement.getElementsByTagName("visibleToRights").item(0).cloneNode(true));
             newFileList.add(newElement);
             try {
-                Files.copy(fileIdToPathInSpringfield.get(id), bagDir.resolve(newFile));
+                // existing files are assumed to be too big be playable
+                Files.copy(fileIdToPathInSpringfield.get(id), bagDir.resolve(newFile), StandardCopyOption.REPLACE_EXISTING);
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -113,7 +118,7 @@ public class Springfield {
     private static String replaceExtension(String oldPath, String extension) {
         // TODO Ensure the dot is not at the beginning or end of the filename
         int dotIndex = oldPath.lastIndexOf('.');
-        return oldPath.substring(0, dotIndex) + extension;
+        return oldPath.substring(0, dotIndex + 1) + extension;
     }
 
     private static String getExtension(Path path) {
