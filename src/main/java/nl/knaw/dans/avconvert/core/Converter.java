@@ -46,9 +46,10 @@ public class Converter {
     public void convert(Path inputBagDir, Path mapping, Path avDir, Path springfieldDir, Path outputDir) {
         log.debug("Converting AV dataset from {} to {}", inputBagDir, outputDir);
         createDirectories(outputDir);
-        var revision1 = outputDir.resolve(inputBagDir.getFileName());
-        var revision2 = outputDir.resolve(UUID.randomUUID().toString());
-        var revision3 = outputDir.resolve(UUID.randomUUID().toString());
+        var inputBagParent = inputBagDir.getParent();
+        var revision1 = outputDir.resolve(inputBagParent.getFileName()).resolve(inputBagDir.getFileName());
+        var revision2 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
+        var revision3 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
         var filesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
