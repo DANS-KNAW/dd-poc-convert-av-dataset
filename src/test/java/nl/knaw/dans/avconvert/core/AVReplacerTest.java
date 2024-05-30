@@ -83,10 +83,10 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
         );
         var filesXml = Converter.readFilesXml(bagDir.resolve("metadata/files.xml"));
 
-        var logger = captureLog(Level.INFO, AVReplacer.class.getName());
+        var logger = captureLog(Level.INFO, ExternalAvFiles.class.getName());
         captureStdout(); // ignore the logging on stdout
 
-        assertThatThrownBy(() -> new AVReplacer(
+        assertThatThrownBy(() -> new ExternalAvFiles(
             bagDir,
             csvFile,
             Path.of("src/test/resources/avDir"),

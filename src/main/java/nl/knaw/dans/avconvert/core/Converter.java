@@ -37,43 +37,37 @@ import java.nio.file.StandardOpenOption;
 import java.util.UUID;
 
 import static java.nio.file.Files.createDirectories;
-import static nl.knaw.dans.avconvert.core.Springfield.addSpringfieldFiles;
-import static nl.knaw.dans.avconvert.core.Springfield.findSpringfieldFiles;
 import static org.apache.commons.io.FileUtils.copyDirectory;
 
 @Slf4j
 public class Converter {
 
     @SneakyThrows
-    public void convert(Path inputDir, Path mapping, Path avDir, Path springfieldDir, Path outputDir) {
-        log.debug("Converting AV dataset from {} to {}", inputDir, outputDir);
+    public void convert(Path inputBagDir, Path mapping, Path avDir, Path springfieldDir, Path outputDir) {
+        log.debug("Converting AV dataset from {} to {}", inputBagDir, outputDir);
         createDirectories(outputDir);
-        var revision1 = outputDir.resolve(inputDir.getFileName());
+        var revision1 = outputDir.resolve(inputBagDir.getFileName());
         var revision2 = outputDir.resolve(UUID.randomUUID().toString());
         var revision3 = outputDir.resolve(UUID.randomUUID().toString());
-        var filesXml = readFilesXml(inputDir.resolve("metadata/files.xml"));
+        var filesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
 
-        copyDirectory(inputDir.toFile(), revision1.toFile());
-        new AVReplacer(revision1, mapping, avDir, filesXml, inputDir.getParent()).replaceAVFiles();
+        copyDirectory(inputBagDir.toFile(), revision1.toFile());
+        new ExternalAvFiles(revision1, mapping, avDir, filesXml, inputBagDir.getParent()).replaceAVFiles();
         ManifestsUpdater.updateAllPayloads(revision1);
 
         copyDirectory(revision1.toFile(), revision2.toFile());
-        var removedFiles = new BagVersion2(revision2).removeNoneNone(filesXml);
+        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXml);
         writeFilesXml(revision2, filesXml);
         addIsVersionOf(revision2, revision1);
         ManifestsUpdater.removePayloads(revision2, removedFiles);
 
-        var fileIdToPathInSpringfield = findSpringfieldFiles(mapping, springfieldDir, inputDir.getParent().toFile().getName());
-        if (!fileIdToPathInSpringfield.isEmpty()) {
+        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagDir.getParent().toFile().getName(), filesXml);
+        if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
-            addSpringfieldFiles(revision3, fileIdToPathInSpringfield, filesXml);
-            if (revision3.toFile().exists()) {
-                // files to be replaced might have been none/none
-                // when nothing remains the bag is removed
-                writeFilesXml(revision3, filesXml);
-                replaceIsVersionOf(revision3, revision2);
-                ManifestsUpdater.updateAllPayloads(revision3);
-            }
+            sfFiles.addSpringfieldFiles(revision3, filesXml);
+            writeFilesXml(revision3, filesXml);
+            replaceIsVersionOf(revision3, revision2);
+            ManifestsUpdater.updateAllPayloads(revision3);
         }
     }
 

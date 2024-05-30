@@ -25,11 +25,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BagVersion2 {
+public class NoneNoneFiles {
 
     private final Path bagDir;
 
-    public BagVersion2(Path bagDir) {
+    public NoneNoneFiles(Path bagDir) {
         this.bagDir = bagDir;
     }
 

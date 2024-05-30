@@ -34,40 +34,18 @@ import java.util.List;
 import java.util.Map;
 
 import static java.text.MessageFormat.format;
-import static org.apache.commons.io.file.PathUtils.deleteDirectory;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Slf4j
-public class Springfield {
-    public static Map<String, Path> findSpringfieldFiles(Path mappingCsv, Path springfieldDir, String bagParent) throws IOException {
-        Map<String, Path> records = new HashMap<>();
-        try (Reader reader = Files.newBufferedReader(mappingCsv);
-            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
+public class SpringfieldFiles {
+    Map<String, Path> idToPathInSpringfield;
+    HashMap<String, Element> matchingFiles;
 
-            for (CSVRecord csvRecord : csvParser) {
-                var pathInSpringfieldDir = csvRecord.get("path_in_springfield_dir");
-                var pathInAvDir = csvRecord.get("path_in_AV_dir");
-                if (isNotEmpty(pathInSpringfieldDir) && pathInAvDir.startsWith(bagParent)) {
-                    var path = springfieldDir.resolve(pathInSpringfieldDir);
-                    if (path.toFile().exists())
-                        records.put(csvRecord.get("easy_file_id"), path);
-                    else {
-                        var message = format("File does not exist in Springfield directory: {0} -- {1}", bagParent, pathInSpringfieldDir);
-                        log.error(message);
-                        throw new IOException(message);
-                    }
-                }
-            }
-        }
-        return records;
-    }
+    public SpringfieldFiles(Path mappingCsv, Path springfieldDir, String inputBagParent, Document filesXml) throws IOException {
+        idToPathInSpringfield = findSpringfieldFiles(mappingCsv, springfieldDir, inputBagParent);
+        matchingFiles = new HashMap<>();
 
-    public static void addSpringfieldFiles(Path bagDir, Map<String, Path> fileIdToPathInSpringfield, Document filesXml) throws IOException {
-
-        var matchingFiles = new HashMap<String, Element>();
-        List<Node> newFileList = new ArrayList<>();
-
-        var ids = fileIdToPathInSpringfield.keySet().stream().toList();
+        var ids = idToPathInSpringfield.keySet().stream().toList();
         var oldFileList = filesXml.getElementsByTagName("file");
         for (int i = 0; i < oldFileList.getLength(); i++) {
             Element file = (Element) oldFileList.item(i);
@@ -82,19 +60,45 @@ public class Springfield {
         if (!matchingFiles.keySet().containsAll(ids)) {
             log.error("Not all files found in files.xml (probably removed because of none/none): {} {}", ids, matchingFiles.keySet());
         }
+    }
 
-        if (matchingFiles.keySet().isEmpty()) {
-            // TODO better move this check to findSpringfieldFiles then the directory is not created
-            deleteDirectory(bagDir);
-            return;
+    public boolean hasFilesToAdd() {
+        return !matchingFiles.keySet().isEmpty();
+    }
+
+    public Map<String, Path> findSpringfieldFiles(Path mappingCsv, Path springfieldDir, String inputBagParent) throws IOException {
+        Map<String, Path> records = new HashMap<>();
+        try (Reader reader = Files.newBufferedReader(mappingCsv);
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
+
+            for (CSVRecord csvRecord : csvParser) {
+                var pathInSpringfieldDir = csvRecord.get("path_in_springfield_dir");
+                var pathInAvDir = csvRecord.get("path_in_AV_dir");
+                if (isNotEmpty(pathInSpringfieldDir) && pathInAvDir.startsWith(inputBagParent)) {
+                    var path = springfieldDir.resolve(pathInSpringfieldDir);
+                    if (path.toFile().exists())
+                        records.put(csvRecord.get("easy_file_id"), path);
+                    else {
+                        var message = format("File does not exist in Springfield directory: {0} -- {1}", inputBagParent, pathInSpringfieldDir);
+                        log.error(message);
+                        throw new IOException(message);
+                    }
+                }
+            }
         }
+        return records;
+    }
+
+    public void addSpringfieldFiles(Path outputBagDir, Document filesXml) {
+
+        List<Node> newFileList = new ArrayList<>();
 
         matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id); // TODO not found?
             var newElement = filesXml.createElement("file");
             var newFile = replaceExtension(
                 oldElement.getAttribute("filepath"),
-                getExtension(fileIdToPathInSpringfield.get(id))
+                getExtension(idToPathInSpringfield.get(id))
             );
             newElement.setAttribute("filepath", newFile);
             newElement.appendChild(oldElement.getElementsByTagName("accessibleToRights").item(0).cloneNode(true));
@@ -102,7 +106,7 @@ public class Springfield {
             newFileList.add(newElement);
             try {
                 // existing files are assumed to be too big be playable
-                Files.copy(fileIdToPathInSpringfield.get(id), bagDir.resolve(newFile), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(idToPathInSpringfield.get(id), outputBagDir.resolve(newFile), StandardCopyOption.REPLACE_EXISTING);
             }
             catch (IOException e) {
                 throw new RuntimeException(e);

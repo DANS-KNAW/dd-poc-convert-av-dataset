@@ -43,7 +43,7 @@ import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Slf4j
-public class AVReplacer {
+public class ExternalAvFiles {
 
     private final Path bagDir;
     private final Path avDir;
@@ -51,7 +51,7 @@ public class AVReplacer {
     private final Map<String, Path> fileIdToBagLocationMap;
     private final String parentOfInputBag;
 
-    public AVReplacer(Path bagDir, Path csv, Path avDir, Document filesXml, Path parentOfInputBag)
+    public ExternalAvFiles(Path bagDir, Path csv, Path avDir, Document filesXml, Path parentOfInputBag)
         throws IOException {
 
         this.bagDir = bagDir;
