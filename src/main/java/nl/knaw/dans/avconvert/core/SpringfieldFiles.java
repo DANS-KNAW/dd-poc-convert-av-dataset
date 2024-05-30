@@ -94,7 +94,7 @@ public class SpringfieldFiles {
         List<Node> newFileList = new ArrayList<>();
 
         matchingFiles.keySet().forEach(id -> {
-            var oldElement = (Element) matchingFiles.get(id); // TODO not found?
+            var oldElement = (Element) matchingFiles.get(id);
             var newElement = filesXml.createElement("file");
             var newFile = replaceExtension(
                 oldElement.getAttribute("filepath"),
