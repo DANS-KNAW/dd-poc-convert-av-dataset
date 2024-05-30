@@ -91,7 +91,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             csvFile,
             Path.of("src/test/resources/avDir"),
             filesXml,
-            bagDir.getParent()
+            bagDir.getParent().getFileName().toString()
         ).replaceAVFiles())
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("Mapping and replaced files do not match");

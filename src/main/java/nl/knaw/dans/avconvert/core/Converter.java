@@ -46,28 +46,28 @@ public class Converter {
     public void convert(Path inputBagDir, Path mapping, Path avDir, Path springfieldDir, Path outputDir) {
         log.debug("Converting AV dataset from {} to {}", inputBagDir, outputDir);
         createDirectories(outputDir);
-        var inputBagParent = inputBagDir.getParent();
-        var revision1 = outputDir.resolve(inputBagParent.getFileName()).resolve(inputBagDir.getFileName());
+        var inputBagParentName = inputBagDir.getParent().toFile().getName();
+        var revision1 = outputDir.resolve(inputBagParentName).resolve(inputBagDir.getFileName());
         var revision2 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
         var revision3 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
-        var mutableFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
+        var mutatedFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
-        new ExternalAvFiles(revision1, mapping, avDir, mutableFilesXml, inputBagDir.getParent()).replaceAVFiles();
+        new ExternalAvFiles(revision1, mapping, avDir, mutatedFilesXml, inputBagParentName).replaceAVFiles();
         ManifestsUpdater.updateAllPayloads(revision1);
 
         copyDirectory(revision1.toFile(), revision2.toFile());
-        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(mutableFilesXml);
-        writeFilesXml(revision2, mutableFilesXml);
+        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(mutatedFilesXml);
+        writeFilesXml(revision2, mutatedFilesXml);
         addIsVersionOf(revision2, revision1);
         ManifestsUpdater.removePayloads(revision2, removedFiles);
 
         var originalFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
-        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagDir.getParent().toFile().getName(), originalFilesXml);
+        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, originalFilesXml);
         if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
-            sfFiles.addSpringfieldFiles(revision3, mutableFilesXml);
-            writeFilesXml(revision3, mutableFilesXml);
+            sfFiles.addSpringfieldFiles(revision3, mutatedFilesXml);
+            writeFilesXml(revision3, mutatedFilesXml);
             replaceIsVersionOf(revision3, revision2);
             ManifestsUpdater.updateAllPayloads(revision3);
         }

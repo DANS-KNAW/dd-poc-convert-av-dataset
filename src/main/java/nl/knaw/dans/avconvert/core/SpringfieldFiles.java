@@ -89,20 +89,20 @@ public class SpringfieldFiles {
         return records;
     }
 
-    public void addSpringfieldFiles(Path outputBagDir, Document mutableFilesXml) {
+    public void addSpringfieldFiles(Path outputBagDir, Document mutatedFilesXml) {
 
         List<Node> newFileList = new ArrayList<>();
 
         matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id);
-            var newElement = mutableFilesXml.createElement("file");
+            var newElement = mutatedFilesXml.createElement("file");
             var newFile = replaceExtension(
                 oldElement.getAttribute("filepath"),
                 getExtension(idToPathInSpringfield.get(id))
             );
             newElement.setAttribute("filepath", newFile);
-            newElement.appendChild(newRightsElement("accessibleToRights", mutableFilesXml, oldElement));
-            newElement.appendChild(newRightsElement("visibleToRights", mutableFilesXml, oldElement));
+            newElement.appendChild(newRightsElement("accessibleToRights", mutatedFilesXml, oldElement));
+            newElement.appendChild(newRightsElement("visibleToRights", mutatedFilesXml, oldElement));
             newFileList.add(newElement);
             try {
                 // existing files are assumed to be too big be playable
@@ -115,13 +115,13 @@ public class SpringfieldFiles {
 
         // Add the new list of files to the <files> element
         for (Node newFile : newFileList) {
-            mutableFilesXml.getElementsByTagName("files").item(0).appendChild(newFile);
+            mutatedFilesXml.getElementsByTagName("files").item(0).appendChild(newFile);
         }
     }
 
-    private static Element newRightsElement(String tag, Document mutableFilesXml, Element oldFileElementRights) {
+    private static Element newRightsElement(String tag, Document mutatedFilesXml, Element oldFileElementRights) {
         var oldRights = (Element) oldFileElementRights.getElementsByTagName(tag).item(0);
-        var rightsElement = mutableFilesXml.createElement(oldRights.getTagName());
+        var rightsElement = mutatedFilesXml.createElement(oldRights.getTagName());
         var value = oldRights.getTextContent();
         if ("NONE".equals(value)) {
             value = "ANONYMOUS";

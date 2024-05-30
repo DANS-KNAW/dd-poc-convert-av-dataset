@@ -33,10 +33,10 @@ public class NoneNoneFiles {
         this.bagDir = bagDir;
     }
 
-    public List<Path> removeNoneNone(Document filesXml) throws IOException {
+    public List<Path> removeNoneNone(Document mutatedFilesXml) throws IOException {
 
         List<Path> filesWithNoneNone = new ArrayList<>();
-        NodeList fileList = filesXml.getElementsByTagName("file");
+        NodeList fileList = mutatedFilesXml.getElementsByTagName("file");
         for (int i = 0; i < fileList.getLength(); i++) {
             Element fileElement = (Element) fileList.item(i);
             if (isNone(fileElement, "accessibleToRights") && isNone(fileElement, "visibleToRights")) {

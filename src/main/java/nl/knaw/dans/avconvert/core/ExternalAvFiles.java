@@ -51,14 +51,14 @@ public class ExternalAvFiles {
     private final Map<String, Path> fileIdToBagLocationMap;
     private final String parentOfInputBag;
 
-    public ExternalAvFiles(Path bagDir, Path csv, Path avDir, Document filesXml, Path parentOfInputBag)
+    public ExternalAvFiles(Path bagDir, Path csv, Path avDir, Document mutatedFilesXml, String parentOfInputBag)
         throws IOException {
 
         this.bagDir = bagDir;
         this.avDir = avDir;
         fileIdToExternalLocationMap = readCSV(csv);
-        fileIdToBagLocationMap = getIdentifierToDestMap(filesXml);
-        this.parentOfInputBag = parentOfInputBag.getFileName().toString();
+        fileIdToBagLocationMap = getIdentifierToDestMap(mutatedFilesXml);
+        this.parentOfInputBag = parentOfInputBag;
         crossCheckReplacedMapped();
     }
 
