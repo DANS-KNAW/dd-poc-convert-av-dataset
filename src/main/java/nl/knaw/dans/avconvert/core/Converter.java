@@ -50,23 +50,24 @@ public class Converter {
         var revision1 = outputDir.resolve(inputBagParent.getFileName()).resolve(inputBagDir.getFileName());
         var revision2 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
         var revision3 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
-        var filesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
+        var mutableFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
-        new ExternalAvFiles(revision1, mapping, avDir, filesXml, inputBagDir.getParent()).replaceAVFiles();
+        new ExternalAvFiles(revision1, mapping, avDir, mutableFilesXml, inputBagDir.getParent()).replaceAVFiles();
         ManifestsUpdater.updateAllPayloads(revision1);
 
         copyDirectory(revision1.toFile(), revision2.toFile());
-        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXml);
-        writeFilesXml(revision2, filesXml);
+        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(mutableFilesXml);
+        writeFilesXml(revision2, mutableFilesXml);
         addIsVersionOf(revision2, revision1);
         ManifestsUpdater.removePayloads(revision2, removedFiles);
 
-        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagDir.getParent().toFile().getName(), filesXml);
+        var originalFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
+        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagDir.getParent().toFile().getName(), originalFilesXml);
         if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
-            sfFiles.addSpringfieldFiles(revision3, filesXml);
-            writeFilesXml(revision3, filesXml);
+            sfFiles.addSpringfieldFiles(revision3, mutableFilesXml);
+            writeFilesXml(revision3, mutableFilesXml);
             replaceIsVersionOf(revision3, revision2);
             ManifestsUpdater.updateAllPayloads(revision3);
         }

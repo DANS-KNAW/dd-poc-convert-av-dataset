@@ -41,12 +41,12 @@ public class SpringfieldFiles {
     Map<String, Path> idToPathInSpringfield;
     HashMap<String, Element> matchingFiles;
 
-    public SpringfieldFiles(Path mappingCsv, Path springfieldDir, String inputBagParent, Document filesXml) throws IOException {
+    public SpringfieldFiles(Path mappingCsv, Path springfieldDir, String inputBagParent, Document originalFilesXml) throws IOException {
         idToPathInSpringfield = findSpringfieldFiles(mappingCsv, springfieldDir, inputBagParent);
         matchingFiles = new HashMap<>();
 
         var ids = idToPathInSpringfield.keySet().stream().toList();
-        var oldFileList = filesXml.getElementsByTagName("file");
+        var oldFileList = originalFilesXml.getElementsByTagName("file");
         for (int i = 0; i < oldFileList.getLength(); i++) {
             Element file = (Element) oldFileList.item(i);
             var elements = file.getElementsByTagName("dct:identifier");
@@ -58,7 +58,7 @@ public class SpringfieldFiles {
             }
         }
         if (!matchingFiles.keySet().containsAll(ids)) {
-            log.error("Not all files found in files.xml (probably removed because of none/none): {} {}", ids, matchingFiles.keySet());
+            log.error("Not all files found in files.xml: {} {}", ids, matchingFiles.keySet());
         }
     }
 
@@ -89,20 +89,20 @@ public class SpringfieldFiles {
         return records;
     }
 
-    public void addSpringfieldFiles(Path outputBagDir, Document filesXml) {
+    public void addSpringfieldFiles(Path outputBagDir, Document mutableFilesXml) {
 
         List<Node> newFileList = new ArrayList<>();
 
         matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id);
-            var newElement = filesXml.createElement("file");
+            var newElement = mutableFilesXml.createElement("file");
             var newFile = replaceExtension(
                 oldElement.getAttribute("filepath"),
                 getExtension(idToPathInSpringfield.get(id))
             );
             newElement.setAttribute("filepath", newFile);
-            newElement.appendChild(oldElement.getElementsByTagName("accessibleToRights").item(0).cloneNode(true));
-            newElement.appendChild(oldElement.getElementsByTagName("visibleToRights").item(0).cloneNode(true));
+            newElement.appendChild(newRightsElement("accessibleToRights", mutableFilesXml, oldElement));
+            newElement.appendChild(newRightsElement("visibleToRights", mutableFilesXml, oldElement));
             newFileList.add(newElement);
             try {
                 // existing files are assumed to be too big be playable
@@ -115,8 +115,19 @@ public class SpringfieldFiles {
 
         // Add the new list of files to the <files> element
         for (Node newFile : newFileList) {
-            filesXml.getElementsByTagName("files").item(0).appendChild(newFile);
+            mutableFilesXml.getElementsByTagName("files").item(0).appendChild(newFile);
         }
+    }
+
+    private static Element newRightsElement(String tag, Document mutableFilesXml, Element oldFileElementRights) {
+        var oldRights = (Element) oldFileElementRights.getElementsByTagName(tag).item(0);
+        var rightsElement = mutableFilesXml.createElement(oldRights.getTagName());
+        var value = oldRights.getTextContent();
+        if ("NONE".equals(value)) {
+            value = "ANONYMOUS";
+        }
+        rightsElement.setTextContent(value);
+        return rightsElement;
     }
 
     private static String replaceExtension(String oldPath, String extension) {
