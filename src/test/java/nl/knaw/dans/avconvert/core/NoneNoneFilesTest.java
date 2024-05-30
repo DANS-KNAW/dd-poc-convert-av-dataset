@@ -27,7 +27,7 @@ import static java.nio.file.Files.createFile;
 import static java.nio.file.Files.writeString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BagVersion2Test extends AbstractTestWithTestDir {
+public class NoneNoneFilesTest extends AbstractTestWithTestDir {
 
     private final Path bagDir = testDir.resolve("bag");
 
