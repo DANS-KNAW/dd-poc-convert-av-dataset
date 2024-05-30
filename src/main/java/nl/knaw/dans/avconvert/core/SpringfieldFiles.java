@@ -122,11 +122,7 @@ public class SpringfieldFiles {
     private static Element newRightsElement(String tag, Document mutatedFilesXml, Element oldFileElementRights) {
         var oldRights = (Element) oldFileElementRights.getElementsByTagName(tag).item(0);
         var rightsElement = mutatedFilesXml.createElement(oldRights.getTagName());
-        var value = oldRights.getTextContent();
-        if ("NONE".equals(value)) {
-            value = "ANONYMOUS";
-        }
-        rightsElement.setTextContent(value);
+        rightsElement.setTextContent(oldRights.getTextContent());
         return rightsElement;
     }
 
