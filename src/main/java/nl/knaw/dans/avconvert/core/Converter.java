@@ -50,24 +50,23 @@ public class Converter {
         var revision1 = outputDir.resolve(inputBagParentName).resolve(inputBagDir.getFileName());
         var revision2 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
         var revision3 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
-        var mutatedFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
+        var filesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
-        new ExternalAvFiles(revision1, mapping, avDir, mutatedFilesXml, inputBagParentName).replaceAVFiles();
+        new ExternalAvFiles(revision1, mapping, avDir, filesXml, inputBagParentName).replaceAVFiles();
         ManifestsUpdater.updateAllPayloads(revision1);
 
         copyDirectory(revision1.toFile(), revision2.toFile());
-        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(mutatedFilesXml);
-        writeFilesXml(revision2, mutatedFilesXml);
+        var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXml);
+        writeFilesXml(revision2, filesXml);
         addIsVersionOf(revision2, revision1);
         ManifestsUpdater.removePayloads(revision2, removedFiles);
 
-        var originalFilesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
-        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, originalFilesXml);
+        var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, filesXml);
         if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
-            sfFiles.addSpringfieldFiles(revision3, mutatedFilesXml);
-            writeFilesXml(revision3, mutatedFilesXml);
+            sfFiles.addSpringfieldFiles(revision3);
+            writeFilesXml(revision3, filesXml);
             replaceIsVersionOf(revision3, revision2);
             ManifestsUpdater.updateAllPayloads(revision3);
         }

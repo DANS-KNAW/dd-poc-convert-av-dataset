@@ -38,15 +38,17 @@ import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Slf4j
 public class SpringfieldFiles {
+    private final Document filesXml;
     Map<String, Path> idToPathInSpringfield;
     HashMap<String, Element> matchingFiles;
 
-    public SpringfieldFiles(Path mappingCsv, Path springfieldDir, String inputBagParent, Document originalFilesXml) throws IOException {
+    public SpringfieldFiles(Path mappingCsv, Path springfieldDir, String inputBagParent, Document filesXml) throws IOException {
+        this.filesXml = filesXml;
         idToPathInSpringfield = findSpringfieldFiles(mappingCsv, springfieldDir, inputBagParent);
         matchingFiles = new HashMap<>();
 
         var ids = idToPathInSpringfield.keySet().stream().toList();
-        var oldFileList = originalFilesXml.getElementsByTagName("file");
+        var oldFileList = filesXml.getElementsByTagName("file");
         for (int i = 0; i < oldFileList.getLength(); i++) {
             Element file = (Element) oldFileList.item(i);
             var elements = file.getElementsByTagName("dct:identifier");
@@ -89,20 +91,20 @@ public class SpringfieldFiles {
         return records;
     }
 
-    public void addSpringfieldFiles(Path outputBagDir, Document mutatedFilesXml) {
+    public void addSpringfieldFiles(Path outputBagDir) {
 
         List<Node> newFileList = new ArrayList<>();
 
         matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id);
-            var newElement = mutatedFilesXml.createElement("file");
+            var newElement = filesXml.createElement("file");
             var newFile = replaceExtension(
                 oldElement.getAttribute("filepath"),
                 getExtension(idToPathInSpringfield.get(id))
             );
             newElement.setAttribute("filepath", newFile);
-            newElement.appendChild(newRightsElement("accessibleToRights", mutatedFilesXml, oldElement));
-            newElement.appendChild(newRightsElement("visibleToRights", mutatedFilesXml, oldElement));
+            newElement.appendChild(newRightsElement("accessibleToRights", filesXml, oldElement));
+            newElement.appendChild(newRightsElement("visibleToRights", filesXml, oldElement));
             newFileList.add(newElement);
             try {
                 // existing files are assumed to be too big be playable
@@ -115,7 +117,7 @@ public class SpringfieldFiles {
 
         // Add the new list of files to the <files> element
         for (Node newFile : newFileList) {
-            mutatedFilesXml.getElementsByTagName("files").item(0).appendChild(newFile);
+            filesXml.getElementsByTagName("files").item(0).appendChild(newFile);
         }
     }
 
