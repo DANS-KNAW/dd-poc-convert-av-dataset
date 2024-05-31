@@ -1,4 +1,4 @@
-59b5048823d1453669ec24bcf3b96f443b828d24  metadata/files.xml
+ee77706cc995940b0966e79e9d8a5efa6550ce79  metadata/files.xml
 ff457c5d73c779e034e0d32c85665526f5233063  metadata/emd.xml
 8010d7758f1793d0221c529fef818ff988dda141  bagit.txt
 f5f5cb4436db25b5417bbc8c901e666bbe3f6ab8  bag-info.txt
