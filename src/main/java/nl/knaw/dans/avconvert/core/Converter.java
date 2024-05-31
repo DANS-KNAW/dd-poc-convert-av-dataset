@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -101,6 +102,7 @@ public class Converter {
     public static void writeFilesXml(Path bagDir, Document filesXml) throws IOException, TransformerException {
         Writer writer = new FileWriter(bagDir.resolve("metadata").resolve("files.xml").toFile());
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.transform(new DOMSource(filesXml), new StreamResult(writer));
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");        transformer.transform(new DOMSource(filesXml), new StreamResult(writer));
     }
 }
