@@ -49,15 +49,17 @@ public class ExternalAvFiles {
     private final Path avDir;
     private final Map<String, Path> fileIdToExternalLocationMap;
     private final Map<String, Path> fileIdToBagLocationMap;
+    private final Document filesXml;
     private final String parentOfInputBag;
 
-    public ExternalAvFiles(Path bagDir, Path csv, Path avDir, Document mutatedFilesXml, String parentOfInputBag)
+    public ExternalAvFiles(Path bagDir, Path csv, Path avDir, Document filesXml, String parentOfInputBag)
         throws IOException {
 
+        this.filesXml = filesXml;
         this.bagDir = bagDir;
         this.avDir = avDir;
         fileIdToExternalLocationMap = readCSV(csv);
-        fileIdToBagLocationMap = getIdentifierToDestMap(mutatedFilesXml);
+        fileIdToBagLocationMap = getIdentifierToDestMap();
         this.parentOfInputBag = parentOfInputBag;
         crossCheckReplacedMapped();
     }
@@ -144,13 +146,14 @@ public class ExternalAvFiles {
         return records;
     }
 
-    private Map<String, Path> getIdentifierToDestMap(Document filesXml) throws IOException {
+    private Map<String, Path> getIdentifierToDestMap() throws IOException {
         Map<String, Path> identifierToDestMap = new HashMap<>();
 
         var fileNodes = filesXml.getElementsByTagName("file");
         for (int i = 0; i < fileNodes.getLength(); i++) {
             var fileElement = (Element) fileNodes.item(i);
-            if (fileElement.getElementsByTagName("dct:source").getLength() > 0) {
+            var sourceNode = fileElement.getElementsByTagName("dct:source");
+            if (sourceNode.getLength() > 0) {
                 NodeList identifierNodes = fileElement.getElementsByTagName("dct:identifier");
                 if (identifierNodes.getLength() == 0) {
                     log.error("No <dct:identifier> found in: {}", serializeNode(fileElement));
@@ -165,6 +168,7 @@ public class ExternalAvFiles {
                         identifierToDestMap.put(identifier, Path.of(filePath));
                     }
                 }
+                fileElement.removeChild(sourceNode.item(0));
             }
         }
         return identifierToDestMap;

@@ -54,20 +54,21 @@ public class Converter {
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
         new ExternalAvFiles(revision1, mapping, avDir, filesXml, inputBagParentName).replaceAVFiles();
+        writeFilesXml(revision1, filesXml);
         ManifestsUpdater.updateAllPayloads(revision1);
 
         copyDirectory(revision1.toFile(), revision2.toFile());
         var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXml);
-        writeFilesXml(revision2, filesXml);
         addIsVersionOf(revision2, revision1);
+        writeFilesXml(revision2, filesXml);
         ManifestsUpdater.removePayloads(revision2, removedFiles);
 
         var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, filesXml);
         if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
             sfFiles.addSpringfieldFiles(revision3);
-            writeFilesXml(revision3, filesXml);
             replaceIsVersionOf(revision3, revision2);
+            writeFilesXml(revision3, filesXml);
             ManifestsUpdater.updateAllPayloads(revision3);
         }
     }
