@@ -15,3 +15,4 @@ for file in $input_dir/*/* $output_dir/*/*/*; do
     echo ""
     echo ""
 done
+grep Is-Version-Of $output_dir/*/*/*/bag-info.txt

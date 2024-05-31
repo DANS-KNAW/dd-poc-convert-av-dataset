@@ -68,7 +68,7 @@ public class IntegrationTest {
     @MethodSource("bagProvider")
     public void testGrandchild(Path inputBag) throws IOException {
         captureStdout(); // ignore the logging on stdout
-        var outputDir = testDir.resolve("converted-bags").resolve(inputBag.getParent().getFileName());
+        var outputDir = testDir.resolve("converted-bags").resolve(inputBag.getParent().getFileName().toString().substring(0,1));
         new Converter().convert(
             inputBag,
             sources.resolve("mapping.csv"),

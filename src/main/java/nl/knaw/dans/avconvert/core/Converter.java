@@ -74,7 +74,7 @@ public class Converter {
 
     private static void addIsVersionOf(Path newBag, Path previousBag) throws IOException {
         Files.writeString(newBag.resolve("bag-info.txt"),
-            "Is-Version-Of: urn:uuid:" + previousBag.getFileName() + System.lineSeparator(),
+            "Is-Version-Of: urn:uuid:" + previousBag.getParent().getFileName() + System.lineSeparator(),
             StandardOpenOption.APPEND
         );
     }
@@ -82,7 +82,7 @@ public class Converter {
     private static void replaceIsVersionOf(Path newBag, Path previousBag) throws IOException {
         var bagInfo = newBag.resolve("bag-info.txt");
         var lines = Files.readAllLines(bagInfo);
-        lines.set(lines.size() - 1, "Is-Version-Of: urn:uuid:" + previousBag.getFileName());
+        lines.set(lines.size() - 1, "Is-Version-Of: urn:uuid:" + previousBag.getParent().getFileName());
         Files.write(bagInfo, lines);
     }
 
