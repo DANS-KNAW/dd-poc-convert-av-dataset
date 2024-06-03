@@ -91,6 +91,7 @@ public class Converter {
                 lines.add("Base-%s: %s".formatted(idType, id.getTextContent()));
             }
         }
+        // must be the last line because of replaceIsVersionOf
         lines.add("Is-Version-Of: urn:uuid:" + previousBag.getParent().getFileName());
         Files.writeString(newBag.resolve("bag-info.txt"),
             String.join(System.lineSeparator(), lines) + System.lineSeparator(),
