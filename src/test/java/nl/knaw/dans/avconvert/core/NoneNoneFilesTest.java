@@ -61,7 +61,7 @@ public class NoneNoneFilesTest extends AbstractTestWithTestDir {
             </files>
             """
         );
-        var filesXml = Converter.readFilesXml(filesXmlPath);
+        var filesXml = Converter.readXml(filesXmlPath);
         assertThat(new NoneNoneFiles(bagDir).removeNoneNone(filesXml))
             .containsExactlyInAnyOrderElementsOf(Set.of(
                 Path.of("data/file1.mp4"),

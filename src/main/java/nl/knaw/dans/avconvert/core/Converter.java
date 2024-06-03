@@ -18,6 +18,7 @@ package nl.knaw.dans.avconvert.core;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -35,6 +36,8 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static java.nio.file.Files.createDirectories;
@@ -51,7 +54,7 @@ public class Converter {
         var revision1 = outputDir.resolve(inputBagParentName).resolve(inputBagDir.getFileName());
         var revision2 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
         var revision3 = outputDir.resolve(UUID.randomUUID().toString()).resolve(UUID.randomUUID().toString());
-        var filesXml = readFilesXml(inputBagDir.resolve("metadata/files.xml"));
+        var filesXml = readXml(inputBagDir.resolve("metadata/files.xml"));
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
         new ExternalAvFiles(revision1, mapping, avDir, filesXml, inputBagParentName).replaceAVFiles();
@@ -74,9 +77,23 @@ public class Converter {
         }
     }
 
-    private static void addIsVersionOf(Path newBag, Path previousBag) throws IOException {
+    private static void addIsVersionOf(Path newBag, Path previousBag) throws IOException, ParserConfigurationException, SAXException {
+        var lines = new ArrayList<String>();
+        var idTypes = List.of("DOI", "URN");
+        var idElements = ((Element) readXml(newBag.resolve("metadata/dataset.xml"))
+            .getElementsByTagName("ddm:dcmiMetadata").item(0))
+            .getElementsByTagName("dct:identifier");
+        for (int i = 0; i < idElements.getLength(); i++) {
+            var id = (Element) idElements.item(i);
+            var idType = id.getAttribute("xsi:type")
+                .replace("id-type:","");
+            if (idTypes.contains(idType)) {
+                lines.add("Base-%s: %s".formatted(idType, id.getTextContent()));
+            }
+        }
+        lines.add("Is-Version-Of: urn:uuid:" + previousBag.getParent().getFileName());
         Files.writeString(newBag.resolve("bag-info.txt"),
-            "Is-Version-Of: urn:uuid:" + previousBag.getParent().getFileName() + System.lineSeparator(),
+            String.join(System.lineSeparator(), lines) + System.lineSeparator(),
             StandardOpenOption.APPEND
         );
     }
@@ -88,7 +105,7 @@ public class Converter {
         Files.write(bagInfo, lines);
     }
 
-    public static Document readFilesXml(Path path) throws ParserConfigurationException, IOException, SAXException {
+    public static Document readXml(Path path) throws ParserConfigurationException, IOException, SAXException {
         var factory = DocumentBuilderFactory.newInstance();
         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
@@ -103,6 +120,7 @@ public class Converter {
         Writer writer = new FileWriter(bagDir.resolve("metadata").resolve("files.xml").toFile());
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");        transformer.transform(new DOMSource(filesXml), new StreamResult(writer));
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.transform(new DOMSource(filesXml), new StreamResult(writer));
     }
 }
