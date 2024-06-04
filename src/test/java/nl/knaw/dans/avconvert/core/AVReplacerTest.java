@@ -81,7 +81,7 @@ public class AVReplacerTest extends AbstractTestWithTestDir {
             </files>
             """
         );
-        var filesXml = Converter.readXml(bagDir.resolve("metadata/files.xml"));
+        var filesXml = XmlUtil.readXml(bagDir.resolve("metadata/files.xml"));
 
         var logger = captureLog(Level.INFO, ExternalAvFiles.class.getName());
         captureStdout(); // ignore the logging on stdout

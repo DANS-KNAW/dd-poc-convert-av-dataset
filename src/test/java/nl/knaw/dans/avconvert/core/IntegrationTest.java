@@ -68,7 +68,7 @@ public class IntegrationTest {
     @MethodSource("bagProvider")
     public void testGrandchild(Path inputBag) throws IOException {
         captureStdout(); // ignore the logging on stdout
-        var outputDir = testDir.resolve("converted-bags").resolve(inputBag.getParent().getFileName().toString().substring(0,1));
+        var outputDir = testDir.resolve("converted-bags").resolve(inputBag.getParent().getFileName().toString().substring(0, 1));
         new Converter().convert(
             inputBag,
             sources.resolve("mapping.csv"),
@@ -85,6 +85,7 @@ public class IntegrationTest {
             .forEach(path -> manifests.add(readSorted(path)));
         assertThat(new HashSet<>(manifests))
             .containsExactlyInAnyOrderElementsOf(manifests);
+        // TODO created in bag-info.txt should be unique
 
         // TODO validate bags manually, follow instructions in src/test/resources/integration/validate.sh
     }

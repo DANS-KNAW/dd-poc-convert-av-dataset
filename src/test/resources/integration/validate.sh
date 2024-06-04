@@ -10,9 +10,8 @@ output_dir=~/git/dans/dd-poc-convert-av-dataset/target/test/IntegrationTest/conv
 input_dir=~/git/dans/dd-poc-convert-av-dataset/src/test/resources/integration/input-bags
 for file in $input_dir/*/* $output_dir/*/*/*; do
     echo "$file"
-    grep Version "$file"/bag-info.txt
     poetry run dans-bag-validate "$file"
     echo ""
     echo ""
 done
-grep Is-Version-Of $output_dir/*/*/*/bag-info.txt
+egrep '(Is-Version-Of|Base-|Created)' $output_dir/*/*/*/bag-info.txt
