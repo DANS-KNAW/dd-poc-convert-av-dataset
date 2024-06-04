@@ -17,6 +17,7 @@ package nl.knaw.dans.avconvert.core;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import nl.knaw.dans.bagit.reader.BagReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -59,13 +60,13 @@ public class Converter {
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
         new ExternalAvFiles(revision1, mapping, avDir, filesXml, inputBagParentName).replaceAVFiles();
         writeFilesXml(revision1, filesXml);
-        ManifestsUpdater.updateAllPayloads(revision1);
+        BagUpdater.updateAllPayloads(new BagReader().read(revision1));
 
         copyDirectory(revision1.toFile(), revision2.toFile());
         var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXml);
         addIsVersionOf(revision2, revision1);
         writeFilesXml(revision2, filesXml);
-        ManifestsUpdater.removePayloads(revision2, removedFiles);
+        BagUpdater.removePayloads(new BagReader().read(revision2), removedFiles);
 
         var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, filesXml);
         if (sfFiles.hasFilesToAdd()) {
@@ -73,7 +74,7 @@ public class Converter {
             sfFiles.addSpringfieldFiles(revision3);
             replaceIsVersionOf(revision3, revision2);
             writeFilesXml(revision3, filesXml);
-            ManifestsUpdater.updateAllPayloads(revision3);
+            BagUpdater.updateAllPayloads(new BagReader().read(revision3));
         }
     }
 

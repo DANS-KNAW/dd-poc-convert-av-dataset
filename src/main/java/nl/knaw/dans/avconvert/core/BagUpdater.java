@@ -23,7 +23,6 @@ import nl.knaw.dans.bagit.exceptions.InvalidBagitFileFormatException;
 import nl.knaw.dans.bagit.exceptions.MaliciousPathException;
 import nl.knaw.dans.bagit.exceptions.UnparsableVersionException;
 import nl.knaw.dans.bagit.exceptions.UnsupportedAlgorithmException;
-import nl.knaw.dans.bagit.reader.BagReader;
 import nl.knaw.dans.bagit.util.PathUtils;
 import nl.knaw.dans.bagit.writer.ManifestWriter;
 
@@ -41,19 +40,19 @@ import java.util.Set;
 
 import static nl.knaw.dans.bagit.hash.Hasher.createManifestToMessageDigestMap;
 
-public abstract class ManifestsUpdater {
+public abstract class BagUpdater {
 
     private final Charset fileEncoding;
-    private final Bag bag;
     private final Path rootDir;
     private final Path bagitDir;
+    private final Bag bag;
 
-    private ManifestsUpdater(Path bagDir) throws MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException, IOException {
-        bag = new BagReader().read(bagDir);
+    private BagUpdater(Bag bag) {
         fileEncoding = bag.getFileEncoding();
         rootDir = bag.getRootDir();
         bagitDir = PathUtils.getBagitDir(bag);
 
+        this.bag = bag;
     }
 
     protected void updateTagAndPayloadManifests()
@@ -115,22 +114,22 @@ public abstract class ManifestsUpdater {
         return createManifestToMessageDigestMap(algorithms);
     }
 
-    public static void updateAllPayloads(Path bagDir)
+    public static void updateAllPayloads(Bag bag)
         throws IOException, NoSuchAlgorithmException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
-        new ManifestsUpdater(bagDir) {
+        new BagUpdater(bag) {
 
             protected void modifyPayloads(Set<Manifest> payLoadManifests) throws NoSuchAlgorithmException, IOException {
                 var payloadFilesMap = getManifestToDigestMap(payLoadManifests);
-                Files.walkFileTree(bagDir.resolve("data"), new CreatePayloadManifestsVistor(payloadFilesMap, true));
+                Files.walkFileTree(bag.getRootDir().resolve("data"), new CreatePayloadManifestsVistor(payloadFilesMap, true));
                 replaceManifests(payLoadManifests, payloadFilesMap);
             }
 
         }.updateTagAndPayloadManifests();
     }
 
-    public static void removePayloads(Path bagDir, List<Path> filesWithNoneNone)
+    public static void removePayloads(Bag bag, List<Path> filesWithNoneNone)
         throws IOException, NoSuchAlgorithmException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
-        new ManifestsUpdater(bagDir) {
+        new BagUpdater(bag) {
 
             @Override
             protected void modifyPayloads(Set<Manifest> payLoadManifests) {
@@ -142,7 +141,7 @@ public abstract class ManifestsUpdater {
             }
 
             private boolean isInNoneNone(Path path) {
-                return filesWithNoneNone.contains(bagDir.relativize(path));
+                return filesWithNoneNone.contains(bag.getRootDir().relativize(path));
             }
         }.updateTagAndPayloadManifests();
     }

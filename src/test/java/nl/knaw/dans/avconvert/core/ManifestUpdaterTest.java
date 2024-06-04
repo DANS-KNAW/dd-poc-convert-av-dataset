@@ -16,6 +16,7 @@
 package nl.knaw.dans.avconvert.core;
 
 import nl.knaw.dans.avconvert.AbstractTestWithTestDir;
+import nl.knaw.dans.bagit.reader.BagReader;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -55,7 +56,7 @@ public class ManifestUpdaterTest extends AbstractTestWithTestDir {
         );
         captureStdout(); // ignore the logging on stdout
 
-        ManifestsUpdater.removePayloads(bagDir, Arrays.asList(
+        BagUpdater.removePayloads(new BagReader().read(bagDir), Arrays.asList(
             Path.of("data/file2.mp4"),
             Path.of("data/file3.mp4")
         ));
