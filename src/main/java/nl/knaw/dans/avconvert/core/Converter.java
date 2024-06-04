@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import static java.nio.file.Files.createDirectories;
 import static nl.knaw.dans.avconvert.core.XmlUtil.readXml;
-import static nl.knaw.dans.avconvert.core.XmlUtil.writeFilesXml;
 import static org.apache.commons.io.FileUtils.copyDirectory;
 
 @Slf4j
@@ -42,20 +41,20 @@ public class Converter {
 
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
         new ExternalAvFiles(revision1, mapping, avDir, filesXmlDocument, inputBagParentName).replaceAVFiles();
-        writeFilesXml(revision1, filesXmlDocument);
+        XmlUtil.writeFilesXml(revision1, filesXmlDocument);
         BagManager.updateAllPayloads(new BagReader().read(revision1));
 
         copyDirectory(revision1.toFile(), revision2.toFile());
         var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXmlDocument);
-        writeFilesXml(revision2, filesXmlDocument);
-        BagManager.removePayloads(BagManager.updateBagInfo(revision2, revision1, false), removedFiles);
+        XmlUtil.writeFilesXml(revision2, filesXmlDocument);
+        BagManager.removePayloads(BagManager.updateBagInfo(revision2, revision1, true), removedFiles);
 
         var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, filesXmlDocument);
         if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
             sfFiles.addSpringfieldFiles(revision3);
-            writeFilesXml(revision3, filesXmlDocument);
-            BagManager.updateAllPayloads(BagManager.updateBagInfo(revision3, revision2, true));
+            XmlUtil.writeFilesXml(revision3, filesXmlDocument);
+            BagManager.updateAllPayloads(BagManager.updateBagInfo(revision3, revision2, false));
         }
     }
 }
