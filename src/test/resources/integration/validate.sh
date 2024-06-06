@@ -15,3 +15,4 @@ for file in $input_dir/*/* $output_dir/*/*/*; do
     echo ""
 done
 egrep '(Is-Version-Of|Base-|Created)' $output_dir/*/*/*/bag-info.txt | sort
+grep -r streaming $output_dir/*/*/*

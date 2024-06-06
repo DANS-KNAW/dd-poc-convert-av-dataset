@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 
 import static java.text.MessageFormat.format;
+import static org.apache.commons.io.FilenameUtils.getExtension;
+import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Slf4j
@@ -97,18 +100,25 @@ public class SpringfieldFiles {
 
         matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id);
+            var oldPath = oldElement.getAttribute("filepath");
+            var oldExtension = getExtension(oldElement.getAttribute("filepath"));
+
+            var springFieldExtension = getExtension(idToPathInSpringfield.get(id).toString());
+            String newPath;
+            if (oldExtension.equals(springFieldExtension)) {
+                newPath = removeExtension(oldPath) + "-streaming." + springFieldExtension;
+            } else {
+                newPath = removeExtension(oldPath) + "." + springFieldExtension;
+            }
+
             var newElement = filesXml.createElement("file");
-            var newFile = replaceExtension(
-                oldElement.getAttribute("filepath"),
-                getExtension(idToPathInSpringfield.get(id))
-            );
-            newElement.setAttribute("filepath", newFile);
+            newElement.setAttribute("filepath", newPath);
             newElement.appendChild(newRightsElement("accessibleToRights", filesXml, oldElement));
             newElement.appendChild(newRightsElement("visibleToRights", filesXml, oldElement));
             newFileList.add(newElement);
             try {
                 // existing files are assumed to be too big be playable
-                Files.copy(idToPathInSpringfield.get(id), outputBagDir.resolve(newFile), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(idToPathInSpringfield.get(id), outputBagDir.resolve(newPath), StandardCopyOption.REPLACE_EXISTING);
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -121,23 +131,10 @@ public class SpringfieldFiles {
         }
     }
 
-    private static Element newRightsElement(String tag, Document mutatedFilesXml, Element oldFileElementRights) {
+    private static Element newRightsElement(String tag, Document filesXml, Element oldFileElementRights) {
         var oldRights = (Element) oldFileElementRights.getElementsByTagName(tag).item(0);
-        var rightsElement = mutatedFilesXml.createElement(oldRights.getTagName());
+        var rightsElement = filesXml.createElement(oldRights.getTagName());
         rightsElement.setTextContent(oldRights.getTextContent());
         return rightsElement;
-    }
-
-    private static String replaceExtension(String oldPath, String extension) {
-        // TODO Ensure the dot is not at the beginning or end of the filename
-        int dotIndex = oldPath.lastIndexOf('.');
-        return oldPath.substring(0, dotIndex + 1) + extension;
-    }
-
-    private static String getExtension(Path path) {
-        // TODO Ensure the dot is not at the beginning or end of the filename
-        var fileName = path.getFileName().toString();
-        int dotIndex = fileName.lastIndexOf('.');
-        return fileName.substring(dotIndex + 1);
     }
 }
