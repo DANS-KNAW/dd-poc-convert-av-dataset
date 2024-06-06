@@ -20,7 +20,6 @@ import nl.knaw.dans.bagit.creator.CreatePayloadManifestsVistor;
 import nl.knaw.dans.bagit.creator.CreateTagManifestsVistor;
 import nl.knaw.dans.bagit.domain.Bag;
 import nl.knaw.dans.bagit.domain.Manifest;
-import nl.knaw.dans.bagit.domain.Metadata;
 import nl.knaw.dans.bagit.exceptions.InvalidBagitFileFormatException;
 import nl.knaw.dans.bagit.exceptions.MaliciousPathException;
 import nl.knaw.dans.bagit.exceptions.UnparsableVersionException;
@@ -129,8 +128,8 @@ public abstract class BagManager {
         return createManifestToMessageDigestMap(algorithms);
     }
 
-    public static void updateAllPayloads(Bag bag)
-        throws IOException, NoSuchAlgorithmException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
+    public static void updateManifests(Bag bag)
+        throws IOException, NoSuchAlgorithmException {
         new BagManager(bag) {
 
             protected void modifyPayloads(Set<Manifest> payLoadManifests) throws NoSuchAlgorithmException, IOException {
@@ -142,7 +141,7 @@ public abstract class BagManager {
                 // statistics: is it worth to calculate only the changed files?
                 var depositDir = bag.getRootDir().getParent().getFileName().toString();
                 var versionOf = bag.getMetadata().get("Is-version-of");
-                if(!isEmpty(versionOf)) {
+                if (!isEmpty(versionOf)) {
                     depositDir = versionOf.get(0).replace("urn:uuid:", "");
                 }
                 long nanosecondsInADay = 24L * 60 * 60 * 1_000_000_000;
@@ -156,8 +155,8 @@ public abstract class BagManager {
         }.updateTagAndPayloadManifests();
     }
 
-    public static void removePayloads(Bag bag, List<Path> filesWithNoneNone)
-        throws IOException, NoSuchAlgorithmException, MaliciousPathException, UnparsableVersionException, UnsupportedAlgorithmException, InvalidBagitFileFormatException {
+    public static void removePayloadsFromManifest(Bag bag, List<Path> filesWithNoneNone)
+        throws IOException, NoSuchAlgorithmException {
         new BagManager(bag) {
 
             @Override
@@ -175,7 +174,7 @@ public abstract class BagManager {
         }.updateTagAndPayloadManifests();
     }
 
-    public static Bag updateBagInfo(Path newBagDir, Path previousBagDir, boolean addBaseIds)
+    public static Bag updateBagVersion(Path newBagDir, Path previousBagDir)
         throws IOException, UnparsableVersionException, MaliciousPathException, UnsupportedAlgorithmException, InvalidBagitFileFormatException, ParserConfigurationException, SAXException {
         var now = ZonedDateTime
             .now(ZoneId.systemDefault())
@@ -186,26 +185,24 @@ public abstract class BagManager {
         bagInfo.remove("Created");
         bagInfo.add("Is-Version-Of", "urn:uuid:" + previousBagDir.getParent().getFileName());
         bagInfo.add("Created", now);
-        if (addBaseIds) {
-            addIdsToBagInfo(bagInfo, newBagDir);
+        if (isEmpty(bagInfo.get("Base-URN")) || isEmpty(bagInfo.get("Base-DOI"))) {
+            // once added for the second bag, we don't need to add for subsequent bags
+            var idTypes = List.of("DOI", "URN");
+            var idElements = ((Element) readXml(newBagDir.resolve("metadata/dataset.xml"))
+                .getElementsByTagName("ddm:dcmiMetadata").item(0))
+                .getElementsByTagName("dct:identifier");
+            for (int i = 0; i < idElements.getLength(); i++) {
+                var id = (Element) idElements.item(i);
+                var idType = id.getAttribute("xsi:type")
+                    .replace("id-type:", "");
+                if (idTypes.contains(idType)) {
+                    bagInfo.remove("Base-" + idType);
+                    bagInfo.add("Base-" + idType, id.getTextContent());
+                }
+            }
         }
         MetadataWriter.writeBagMetadata(bagInfo, newBag.getVersion(), newBag.getRootDir(), StandardCharsets.UTF_8);
         return newBag;
-    }
-
-    private static void addIdsToBagInfo(Metadata bagInfo, Path newBagDir) throws ParserConfigurationException, IOException, SAXException {
-        var idTypes = List.of("DOI", "URN");
-        var idElements = ((Element) readXml(newBagDir.resolve("metadata/dataset.xml"))
-            .getElementsByTagName("ddm:dcmiMetadata").item(0))
-            .getElementsByTagName("dct:identifier");
-        for (int i = 0; i < idElements.getLength(); i++) {
-            var id = (Element) idElements.item(i);
-            var idType = id.getAttribute("xsi:type")
-                .replace("id-type:", "");
-            if (idTypes.contains(idType)) {
-                bagInfo.add("Base-" + idType, id.getTextContent());
-            }
-        }
     }
 
 }

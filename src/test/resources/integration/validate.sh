@@ -14,4 +14,4 @@ for file in $input_dir/*/* $output_dir/*/*/*; do
     echo ""
     echo ""
 done
-egrep '(Is-Version-Of|Base-|Created)' $output_dir/*/*/*/bag-info.txt
+egrep '(Is-Version-Of|Base-|Created)' $output_dir/*/*/*/bag-info.txt | sort

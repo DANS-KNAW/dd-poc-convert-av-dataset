@@ -57,7 +57,7 @@ public class BagManagerTest extends AbstractTestWithTestDir {
         );
         captureStdout(); // ignore the logging on stdout
 
-        BagManager.removePayloads(new BagReader().read(bagDir), Arrays.asList(
+        BagManager.removePayloadsFromManifest(new BagReader().read(bagDir), Arrays.asList(
             Path.of("data/file2.mp4"),
             Path.of("data/file3.mp4")
         ));

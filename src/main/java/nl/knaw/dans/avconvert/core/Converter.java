@@ -42,19 +42,19 @@ public class Converter {
         copyDirectory(inputBagDir.toFile(), revision1.toFile());
         new ExternalAvFiles(revision1, mapping, avDir, filesXmlDocument, inputBagParentName).replaceAVFiles();
         XmlUtil.writeFilesXml(revision1, filesXmlDocument);
-        BagManager.updateAllPayloads(new BagReader().read(revision1));
+        BagManager.updateManifests(new BagReader().read(revision1));
 
         copyDirectory(revision1.toFile(), revision2.toFile());
         var removedFiles = new NoneNoneFiles(revision2).removeNoneNone(filesXmlDocument);
         XmlUtil.writeFilesXml(revision2, filesXmlDocument);
-        BagManager.removePayloads(BagManager.updateBagInfo(revision2, revision1, true), removedFiles);
+        BagManager.removePayloadsFromManifest(BagManager.updateBagVersion(revision2, revision1), removedFiles);
 
         var sfFiles = new SpringfieldFiles(mapping, springfieldDir, inputBagParentName, filesXmlDocument);
         if (sfFiles.hasFilesToAdd()) {
             copyDirectory(revision2.toFile(), revision3.toFile());
             sfFiles.addSpringfieldFiles(revision3);
             XmlUtil.writeFilesXml(revision3, filesXmlDocument);
-            BagManager.updateAllPayloads(BagManager.updateBagInfo(revision3, revision2, false));
+            BagManager.updateManifests(BagManager.updateBagVersion(revision3, revision2));
         }
     }
 }
