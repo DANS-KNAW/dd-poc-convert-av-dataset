@@ -98,15 +98,14 @@ public class SpringfieldFiles {
         List<Node> newFileList = new ArrayList<>();
 
         matchingFiles.keySet().forEach(id -> {
-            var oldElement = (Element) matchingFiles.get(id);
-            var oldPath = oldElement.getAttribute("filepath");
+            var oldFileElement = (Element) matchingFiles.get(id);
             var springfieldExtension = getExtension(idToPathInSpringfield.get(id).toString());
-            var newPath = getNewPath(oldElement, springfieldExtension, oldPath);
+            var newPath = getNewPath(springfieldExtension, oldFileElement.getAttribute("filepath"));
 
             var newElement = filesXml.createElement("file");
             newElement.setAttribute("filepath", newPath);
-            newElement.appendChild(newRightsElement("accessibleToRights", filesXml, oldElement));
-            newElement.appendChild(newRightsElement("visibleToRights", filesXml, oldElement));
+            newElement.appendChild(newRightsElement("accessibleToRights", filesXml, oldFileElement));
+            newElement.appendChild(newRightsElement("visibleToRights", filesXml, oldFileElement));
             newFileList.add(newElement);
             try {
                 // existing files are assumed to be too big be playable
@@ -123,18 +122,18 @@ public class SpringfieldFiles {
         }
     }
 
-    private static String getNewPath(Element oldElement, String springFieldExtension, String oldPath) {
-        var oldExtension = getExtension(oldElement.getAttribute("filepath"));
-        if (oldExtension.equals(springFieldExtension)) {
-            return removeExtension(oldPath) + "-streaming." + springFieldExtension;
+    private static String getNewPath(String newExtension, String oldPath) {
+        var oldExtension = getExtension(oldPath);
+        if (oldExtension.equals(newExtension)) {
+            return removeExtension(oldPath) + "-streaming." + newExtension;
         }
         else {
-            return removeExtension(oldPath) + "." + springFieldExtension;
+            return removeExtension(oldPath) + "." + newExtension;
         }
     }
 
-    private static Element newRightsElement(String tag, Document filesXml, Element oldFileElementRights) {
-        var oldRights = (Element) oldFileElementRights.getElementsByTagName(tag).item(0);
+    private static Element newRightsElement(String tag, Document filesXml, Element oldFileElement) {
+        var oldRights = (Element) oldFileElement.getElementsByTagName(tag).item(0);
         var rightsElement = filesXml.createElement(oldRights.getTagName());
         rightsElement.setTextContent(oldRights.getTextContent());
         return rightsElement;
