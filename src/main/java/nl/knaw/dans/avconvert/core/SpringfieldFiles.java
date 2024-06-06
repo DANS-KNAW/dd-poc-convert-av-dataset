@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -101,15 +100,8 @@ public class SpringfieldFiles {
         matchingFiles.keySet().forEach(id -> {
             var oldElement = (Element) matchingFiles.get(id);
             var oldPath = oldElement.getAttribute("filepath");
-            var oldExtension = getExtension(oldElement.getAttribute("filepath"));
-
-            var springFieldExtension = getExtension(idToPathInSpringfield.get(id).toString());
-            String newPath;
-            if (oldExtension.equals(springFieldExtension)) {
-                newPath = removeExtension(oldPath) + "-streaming." + springFieldExtension;
-            } else {
-                newPath = removeExtension(oldPath) + "." + springFieldExtension;
-            }
+            var springfieldExtension = getExtension(idToPathInSpringfield.get(id).toString());
+            var newPath = getNewPath(oldElement, springfieldExtension, oldPath);
 
             var newElement = filesXml.createElement("file");
             newElement.setAttribute("filepath", newPath);
@@ -128,6 +120,16 @@ public class SpringfieldFiles {
         // Add the new list of files to the <files> element
         for (Node newFile : newFileList) {
             filesXml.getElementsByTagName("files").item(0).appendChild(newFile);
+        }
+    }
+
+    private static String getNewPath(Element oldElement, String springFieldExtension, String oldPath) {
+        var oldExtension = getExtension(oldElement.getAttribute("filepath"));
+        if (oldExtension.equals(springFieldExtension)) {
+            return removeExtension(oldPath) + "-streaming." + springFieldExtension;
+        }
+        else {
+            return removeExtension(oldPath) + "." + springFieldExtension;
         }
     }
 
