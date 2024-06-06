@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.avconvert.core;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.knaw.dans.bagit.creator.CreatePayloadManifestsVistor;
 import nl.knaw.dans.bagit.creator.CreateTagManifestsVistor;
 import nl.knaw.dans.bagit.domain.Bag;
@@ -48,9 +49,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static java.time.LocalTime.now;
 import static nl.knaw.dans.avconvert.core.XmlUtil.readXml;
 import static nl.knaw.dans.bagit.hash.Hasher.createManifestToMessageDigestMap;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
+@Slf4j
 public abstract class BagManager {
 
     private final Charset fileEncoding;
@@ -131,7 +135,21 @@ public abstract class BagManager {
 
             protected void modifyPayloads(Set<Manifest> payLoadManifests) throws NoSuchAlgorithmException, IOException {
                 var payloadFilesMap = getManifestToDigestMap(payLoadManifests);
+                var beforeWalk = now().toNanoOfDay();
                 Files.walkFileTree(bag.getRootDir().resolve("data"), new CreatePayloadManifestsVistor(payloadFilesMap, true));
+                var afterWalk = now().toNanoOfDay();
+
+                // statistics: is it worth to calculate only the changed files?
+                var depositDir = bag.getRootDir().getParent().getFileName().toString();
+                var versionOf = bag.getMetadata().get("Is-version-of");
+                if(!isEmpty(versionOf)) {
+                    depositDir = versionOf.get(0).replace("urn:uuid:", "");
+                }
+                long nanosecondsInADay = 24L * 60 * 60 * 1_000_000_000;
+                if (afterWalk < beforeWalk) {
+                    afterWalk += nanosecondsInADay;
+                }
+                log.info("{} Nanoseconds to calculate checksums: {}", depositDir, afterWalk - beforeWalk);
                 replaceManifests(payLoadManifests, payloadFilesMap);
             }
 
