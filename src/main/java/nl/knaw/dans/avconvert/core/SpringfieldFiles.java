@@ -62,7 +62,9 @@ public class SpringfieldFiles {
             }
         }
         if (!matchingFiles.keySet().containsAll(ids)) {
-            log.error("Not all files found in files.xml: {} {}", ids, matchingFiles.keySet());
+            var msg = "Not all files found in files.xml: %s %s".formatted(ids, matchingFiles.keySet());
+            log.error(msg);
+            throw new IllegalStateException(msg);
         }
     }
 

@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.h2.store.fs.FileUtils.createFile;
 
-public class AVReplacerTest extends AbstractTestWithTestDir {
+public class ExternalAvTest extends AbstractTestWithTestDir {
 
     private final Path bagDir = testDir.resolve("bagParent").resolve("bag");
     private final Path filesXmlPath = bagDir.resolve("metadata/files.xml");

@@ -10,7 +10,7 @@ output_dir=~/git/dans/dd-poc-convert-av-dataset/target/test/IntegrationTest/conv
 input_dir=~/git/dans/dd-poc-convert-av-dataset/src/test/resources/integration/input-bags
 for file in $input_dir/*/* $output_dir/*/*/*; do
     echo "$file"
-    poetry run dans-bag-validate "$file"
+    poetry run dans-bag-validate -t MIGRATION "$file"
     echo ""
     echo ""
 done
