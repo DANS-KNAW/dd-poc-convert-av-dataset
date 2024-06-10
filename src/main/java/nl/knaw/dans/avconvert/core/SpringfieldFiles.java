@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,8 +109,7 @@ public class SpringfieldFiles {
             newElement.appendChild(newRightsElement("visibleToRights", filesXml, oldFileElement));
             newFileList.add(newElement);
             try {
-                // existing files are assumed to be too big be playable
-                Files.copy(idToPathInSpringfield.get(id), outputBagDir.resolve(newPath), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(idToPathInSpringfield.get(id), outputBagDir.resolve(newPath));
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
